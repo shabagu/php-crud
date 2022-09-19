@@ -37,3 +37,10 @@
   background-color: #343a40;
   content: "Browse ...";
 }
+
+
+/* icon hover underline fix */
+
+#product-table a:hover {
+    text-decoration: none !important;   
+}
