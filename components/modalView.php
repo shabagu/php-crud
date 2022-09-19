@@ -1,4 +1,4 @@
-<div class="modal fade" id="product-view" tabindex="-1" role="dialog">
+<div class="modal fade" id="product-view-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

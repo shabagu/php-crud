@@ -1,11 +1,10 @@
 <?php
 require_once "Database.php";
-
 class Product extends Database
 {
   protected $tableName="product";
 
-  // add product
+  // add row
   public function addRow($data) {
 
     if (!empty($data)) {
@@ -17,7 +16,7 @@ class Product extends Database
       }
     }
 
-    // $sql = "INSERT INTO {$this->tableName} (name, code, amount, purchase_price) VALUES (:name, :code, :amount, :purchase_price)";
+  # $sql = "INSERT INTO {$this->tableName} (name, code, amount, purchase_price) VALUES (:name, :code, :amount, :purchase_price)";
     $sql = "INSERT INTO {$this->tableName} (" . implode(",", $fields) . ") VALUES (" . implode(",", $placeholder) . ")";    
     $statement = $this->connection->prepare($sql);
 
@@ -34,19 +33,30 @@ class Product extends Database
     }
   }
 
-  // get multiple rows
-  public function getMultipleRows($start = 0, $limit = 4) {
-    $sql = "SELECT * FROM {$this->tableName} ORDER BY id DESC LIMIT {$start}, {$limit}";
-    $statement = $this->connection->prepare($sql);
-    $statement->execute();
 
-    if ($statement->rowCount() > 0) {
-      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-      $result = [];
+  // upload image
+  public function uploadImage($file) {
+    if (!empty($file)) {
+      $fileTempPath = $file["tmp_name"];
+      $fileName = $file["name"];
+    # $fileType = $file["type"];
+
+      $fileNameNormalize = explode(".", $fileName);
+      $fileExtension = strtolower(end($fileNameNormalize));
+      $fileNameNew=md5(time() . $fileName) . "." . $fileExtension;
+      $allowedExtensions = ["png", "jpg", "jpeg"];
+      
+      if (in_array($fileExtension, $allowedExtensions)) {
+        $fileUploadDirectory = getcwd() . "/uploads/";
+        $fileDestinationPath = $fileUploadDirectory . $fileNameNew;
+
+        if (move_uploaded_file($fileTempPath, $fileDestinationPath)) {
+          return $fileNameNew;
+        }
+      }
     }
-    return $result;
   }
+
 
   // get single row
   public function getSingleRow($field, $value) {
@@ -61,8 +71,24 @@ class Product extends Database
     return $result;
   }
 
+
+  // get multiple rows
+  public function getMultipleRows($start = 0, $limit = 4) {
+    $sql = "SELECT * FROM {$this->tableName} ORDER BY id DESC LIMIT {$start}, {$limit}";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute();
+
+    if ($statement->rowCount() > 0) {
+      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+      $result = [];
+    }
+    return $result;
+  }
+
+
   // get count of rows
-  public function getCount() {
+  public function getCountRows() {
     $sql = "SELECT count(*) as rowsnum FROM {$this->tableName}";
     $statement = $this->connection->prepare($sql);
     $statement->execute();
@@ -70,34 +96,15 @@ class Product extends Database
     return $result["rowsnum"];
   }
 
-  // upload image
-  public function uploadImage($file) {
-    if (!empty($file)) {
-      $fileTempPath = $file["tmp_name"];
-      $fileName = $file["name"];
-      // $fileType = $file["type"];
-
-      $fileNameNormalize = explode(".", $fileName);
-      $fileExtension = strtolower(end($fileNameNormalize));
-
-      $fileNameNew=md5(time() . $fileName) . "." . $fileExtension;
-      $allowedExtensions = ["png", "jpg", "jpeg"];
-
-      if (in_array($fileExtension, $allowedExtensions)) {
-        $fileUploadDirectory = getcwd() . "/uploads/";
-        $fileDestinationPath = $fileUploadDirectory . $fileNameNew;
-
-        if (move_uploaded_file($fileTempPath, $fileDestinationPath)) {
-          return $fileNameNew;
-        }
-      }
-    }
-  }
 
   // update product
 
+
   // delete product
 
+
   // search product
+
+
 
 }

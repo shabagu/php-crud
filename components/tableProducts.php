@@ -17,13 +17,13 @@
       <td>123</td>
       <td>155</td>
       <td>
-        <a href="#" title="View product card" class="ml-3 profile text-dark" data-target="#product-view" data-toggle="modal">
+        <a href="#" title="View product card" class="ml-3 profile text-dark" data-target="#product-view-modal" data-toggle="modal">
           <i class="fa-lg fa-solid fa-eye"></i>
         </a>
-        <a href="#" title="Edit product data" class="ml-3 edit text-dark" data-target="#product-add" data-toggle="modal">
+        <a href="#" title="Edit product data" class="ml-3 edit text-dark" data-target="#product-add-modal" data-toggle="modal">
           <i class="fa-lg fa-solid fa-pencil"></i>
         </a>
-        <a href="#" title="Delete product" class="ml-3 delete text-danger" data-target="#product-add" data-toggle="modal">
+        <a href="#" title="Delete product" class="ml-3 delete text-danger" data-target="#product-add-modal" data-toggle="modal">
           <i class="fa-lg fa-solid fa-trash-can"></i>
         </a>
       </td>

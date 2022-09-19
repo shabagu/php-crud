@@ -1,4 +1,4 @@
-<div class="modal fade" id="product-add" tabindex="-1" role="dialog">
+<div class="modal fade" id="product-add-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,7 +7,7 @@
           <span>&times;</span>
         </button>
       </div>
-      <form id="add-form" method="post" enctype="multipart/form-data">
+      <form id="product-add-form" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <!-- product name -->
           <div class="form-group">
