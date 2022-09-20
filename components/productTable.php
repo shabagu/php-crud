@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <!-- <tr>
       <td scope="row">pic1</td>
       <td>sadfasd</td>
       <td>13412341234</td>
@@ -27,6 +27,6 @@
           <i class="fa-lg fa-solid fa-trash-can"></i>
         </a>
       </td>
-    </tr>
+    </tr> -->
   </tbody>
 </table>

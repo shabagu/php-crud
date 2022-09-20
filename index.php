@@ -1,5 +1,3 @@
-<!-- 1:01:00 -->
-
 <?php
 // require_once "partials/connect.php";
 // $db = new Database();
@@ -24,13 +22,12 @@
   <!-- font awesome cnd link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- custom css -->
-  <link rel="stylesheet" href="style/main.css">
+  <link rel="stylesheet" href="style/bootstrap-override.css">
+  <link rel="stylesheet" href="style/style.css">
 
-  <!-- favicons -->
-  <link rel="icon" href="content/favicon-16.png" type="image/png" sizes="16x16">
-  <link rel="icon" href="content/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="icon" href="content/favicon-96.png" type="image/png" sizes="96x96">
-
+  <!-- favicon -->
+  <link rel="icon" href="media/favicon-32.png" type="image/png" sizes="32x32">
+  <!-- page title -->
   <title>PHP CRUD</title>
 </head>
 <body>
@@ -54,8 +51,8 @@
       </div>
     </div>
 
-    <!-- products table -->
-    <?php include "components/tableProducts.php"; ?>
+    <!-- product table -->
+    <?php include "components/productTable.php"; ?>
 
     <!-- pagination -->
     <nav aria-label="Products pagination" id="products-pagination">
@@ -67,6 +64,7 @@
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>
     </nav>
+    <input type="hidden" value="1" name="current-page" id="current-page">
 
     <!-- modal forms -->
     <?php include "components/modalAdd.php"; ?>

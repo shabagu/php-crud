@@ -6,14 +6,13 @@ if (!empty($action)) {
   $product = new Product();
 }
 
-// add product
-if ($action="add-product" && !empty($_POST)) {
+// add-product action
+if ($action == "add-product" && !empty($_POST)) {
   $name = $_POST["name"];
   $code = $_POST["code"];
   $amount = $_POST["amount"];
   $purchasePrice = $_POST["purchase-price"];
   $image = $_FILES["image"];
-
   $productId = (!empty($_POST["product-id"])) ? $_POST["product-id"] : "";
 
   $imageName="";
@@ -38,9 +37,29 @@ if ($action="add-product" && !empty($_POST)) {
   $productId = $product->addRow($productData);
 
   if (!empty($productId)) {
-    $productGet = $product->getSingleRow('id', $productId);
-    echo json_encode($productGet);
+    $response = $product->getSingleRow('id', $productId);
+    
+    echo json_encode($response);
     exit();
   }
 }
 
+// get-products action
+if ($action == "get-products") {
+  $page = (!empty($_GET["page"])) ? $_GET["page"] : 1;
+  $limit = 4;
+  $start = ($page - 1) * $limit;
+  $products = $product->getMultipleRows($start, $limit);
+
+  if (!empty($products)) {
+    $productList = $products;
+  } else {
+    $productList = [];
+  }
+
+  $productsCount = $product->getCountRows();
+  $response = ["count" => $productsCount, "products" => $productList];
+
+  echo json_encode($response);
+  exit();
+}

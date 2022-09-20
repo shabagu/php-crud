@@ -2,9 +2,9 @@
 class Database
 {
   private $dbserver = "localhost";
-  private $dbname = "phpcrudproduct";
   private $dbuser = "root";
   private $dbpassword = "";
+  private $dbname = "phpcrudproduct";
   protected $connection;
 
   public function __construct() {

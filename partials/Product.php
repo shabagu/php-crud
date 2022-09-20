@@ -37,21 +37,22 @@ class Product extends Database
   // upload image
   public function uploadImage($file) {
     if (!empty($file)) {
-      $fileTempPath = $file["tmp_name"];
       $fileName = $file["name"];
+      $fileTempName = $file["tmp_name"];
+    # $fileSize = $file["size"];
     # $fileType = $file["type"];
 
-      $fileNameNormalize = explode(".", $fileName);
-      $fileExtension = strtolower(end($fileNameNormalize));
-      $fileNameNew=md5(time() . $fileName) . "." . $fileExtension;
-      $allowedExtensions = ["png", "jpg", "jpeg"];
-      
-      if (in_array($fileExtension, $allowedExtensions)) {
-        $fileUploadDirectory = getcwd() . "/uploads/";
-        $fileDestinationPath = $fileUploadDirectory . $fileNameNew;
+      $fileNameSeparated = explode(".", $fileName);
+      $fileExtension = strtolower(end($fileNameSeparated));
 
-        if (move_uploaded_file($fileTempPath, $fileDestinationPath)) {
-          return $fileNameNew;
+      $allowedExtensions = ["png", "jpg", "jpeg"];
+      if (in_array($fileExtension, $allowedExtensions)) {
+        $fileNameHashed = md5(time() . $fileName) . "." . $fileExtension;
+        $fileUploadDirectory = getcwd() . "/uploads/";
+        $fileDestinationPath = $fileUploadDirectory . $fileNameHashed;
+
+        if (move_uploaded_file($fileTempName, $fileDestinationPath)) {
+          return $fileNameHashed;
         }
       }
     }
@@ -60,9 +61,9 @@ class Product extends Database
 
   // get single row
   public function getSingleRow($field, $value) {
-    $sql = "SELECT * FROM {$this->tableName} WHERE {$field}={$value}";
+    $sql = "SELECT * FROM {$this->tableName} WHERE {$field}=:{$field}";
     $statement = $this->connection->prepare($sql);
-    $statement->execute();
+    $statement->execute([":{$field}" => $value]);
     if ($statement->rowCount() > 0) {
       $result = $statement->fetch(PDO::FETCH_ASSOC);
     } else {
@@ -89,11 +90,11 @@ class Product extends Database
 
   // get count of rows
   public function getCountRows() {
-    $sql = "SELECT count(*) as rowsnum FROM {$this->tableName}";
+    $sql = "SELECT count(*) as _count FROM {$this->tableName}";
     $statement = $this->connection->prepare($sql);
     $statement->execute();
     $result = $statement->fetch(PDO::FETCH_ASSOC);
-    return $result["rowsnum"];
+    return $result["_count"];
   }
 
 
