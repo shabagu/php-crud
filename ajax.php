@@ -6,6 +6,7 @@ if (!empty($action)) {
   $product = new Product();
 }
 
+// add product
 if ($action="add-product" && !empty($_POST)) {
   $name = $_POST["name"];
   $code = $_POST["code"];
@@ -42,3 +43,4 @@ if ($action="add-product" && !empty($_POST)) {
     exit();
   }
 }
+
