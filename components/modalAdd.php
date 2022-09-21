@@ -73,8 +73,8 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-dark">Submit</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <input type="hidden" name="action" value="add-product">
           <input type="hidden" name="product-id" value="" id="product-id">
+          <input type="hidden" name="action" value="add-product">
         </div>
       </form>
     </div>

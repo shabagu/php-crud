@@ -31,7 +31,7 @@
   <title>PHP CRUD</title>
 </head>
 <body>
-  <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
+  <h1 class="bg-dark text-light text-center py-2">PHP CRUD 3:36:00</h1>
   <div class="container">
 
     <!-- search form -->
@@ -57,11 +57,11 @@
     <!-- pagination -->
     <nav aria-label="Product pagination" id="product-pagination">
       <!-- <ul class="pagination justify-content-center">
-        <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
-        <li class="page-item active"><a class="page-link" href="">1</a></li>
-        <li class="page-item"><a class="page-link" href="">2</a></li>
-        <li class="page-item"><a class="page-link" href="">3</a></li>
-        <li class="page-item"><a class="page-link" href="">Next</a></li>
+        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul> -->
     </nav>
     <input type="hidden" value="1" name="current-page" id="current-page">

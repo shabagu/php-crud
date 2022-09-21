@@ -2,11 +2,11 @@
 $(document).ready(function() {
 
   // calling getProducts()
-  getProducts();
+  getProducts()
   
-  // add product action
-  $(document).on("submit", "#product-add-form", function(e) {
-    e.preventDefault()
+  // submitting product add form
+  $(document).on("submit", "#product-add-form", function(event) {
+    event.preventDefault()
     $.ajax({
       url: "/php-crud/ajax.php",
       type: "post",
@@ -23,7 +23,7 @@ $(document).ready(function() {
         if (response) {
           $("#product-add-modal").modal("hide")
           $("#product-add-form")[0].reset()
-          getProducts();
+          getProducts()
         }
       },
       error: function(request, error) {
@@ -33,18 +33,27 @@ $(document).ready(function() {
     })
   })
 
+  // onclick event for pagination
+  $(document).on("click", "ul.pagination li a", function(event) {
+    event.preventDefault()
+    const targetPage = $(this).data("page")
+    $("#current-page").val(targetPage)
+    getProducts()
+  })
+
+
 })
 
 
 
 // get products
 function getProducts() {
-  let pageNumber = $("#current-page").val();
+  let currentPageNumber = $("#current-page").val()
   $.ajax({
     url: "/php-crud/ajax.php",
     type: "get",
     dataType: "json",
-    data: {page: pageNumber, action: "get-products"},
+    data: {page: currentPageNumber, action: "get-products"},
     beforeSend: function() {
       console.log("Data is loading ...")
     },
@@ -56,13 +65,11 @@ function getProducts() {
         $.each(response.products, function(index, product) {
           productRows += createProductRow(product)
         })
-        $("#product-table tbody").html(productRows);
+        $("#product-table tbody").html(productRows)
         let productCount = response.count
         let pageCount = Math.ceil(parseInt(productCount) / 4)
-        let currentPageNumber = $("#current-page").val() // todo --> const or let ???
+        // let currentPageNumber = $("#current-page").val() // todo -->> ????
         pagination(pageCount, currentPageNumber)
-
-        $("#product-pagination")
       }
     },
     error: function(request, error) {
@@ -78,24 +85,24 @@ function createProductRow(product) {
 
   if (product) {
     productRow = `
-    <tr>
-      <td scope="row"><img src=uploads/${product.image}></td>
-      <td>${product.name}</td>
-      <td>${product.code}</td>
-      <td>${product.purchase_price}</td>
-      <td>${product.amount}</td>
-      <td>
-        <a href="" title="View product card" data-id="${product.id}" class="ml-3 profile text-dark" data-target="#product-view-modal" data-toggle="modal">
-          <i class="fa-lg fa-solid fa-eye"></i>
-        </a>
-        <a href="" title="Edit product data" data-id="${product.id}" class="ml-3 edit text-dark" data-target="#product-add-modal" data-toggle="modal">
-          <i class="fa-lg fa-solid fa-pencil"></i>
-        </a>
-        <a href="" title="Delete product" data-id="${product.id}" class="ml-3 delete text-danger" data-target="#product-add-modal" data-toggle="modal">
-          <i class="fa-lg fa-solid fa-trash-can"></i>
-        </a>
-      </td>
-    </tr>
+      <tr>
+        <td scope="row"><img src=uploads/${product.image}></td>
+        <td>${product.name}</td>
+        <td>${product.code}</td>
+        <td>${product.purchase_price}</td>
+        <td>${product.amount}</td>
+        <td>
+          <a href="#" title="View product card" data-id="${product.id}" class="ml-3 profile text-dark" data-toggle="modal" data-target="#product-view-modal">
+            <i class="fa-lg fa-solid fa-eye"></i>
+          </a>
+          <a href="#" title="Edit product data" data-id="${product.id}" class="ml-3 edit text-dark" data-toggle="modal" data-target="#product-add-modal">
+            <i class="fa-lg fa-solid fa-pencil"></i>
+          </a>
+          <a href="#" title="Delete product" data-id="${product.id}" class="ml-3 delete text-danger" data-toggle="modal" data-target="#product-add-modal">
+            <i class="fa-lg fa-solid fa-trash-can"></i>
+          </a>
+        </td>
+      </tr>
     `
   }
   return productRow
@@ -103,24 +110,30 @@ function createProductRow(product) {
 
 // pagination function
 function pagination(totalNumberOfPages, currentPageNumber) {
-  let pageList = "";
+  let pageList = ""
   if (totalNumberOfPages > 1) {
-    currentPageNumber = parseInt(currentPageNumber);
+    currentPageNumber = parseInt(currentPageNumber)
     const previousLiCondition = currentPageNumber == 1 ?  "disabled" : ""
     const nextLiCondition = currentPageNumber == totalNumberOfPages ? "disabled" : ""
     pageList += `<ul class="pagination justify-content-center">`
-    pageList += `<li class="page-item ${previousLiCondition}">
-      <a class="page-link" href="" data-page="${currentPageNumber - 1}">&lt;</a>
-    </li>`
+    pageList += `
+      <li class="page-item ${previousLiCondition}">
+        <a class="page-link" href="#" data-page="${currentPageNumber - 1}">&lt;</a>
+      </li>
+    `
     for (let pageNumber = 1; pageNumber <= totalNumberOfPages; pageNumber++) {
       const activeLiCondition = pageNumber == currentPageNumber ? "active" : ""
-      pageList += `<li class="page-item ${activeLiCondition}">
-        <a class="page-link" href="" data-page="${pageNumber}">${pageNumber}</a>
-      </li>`
+      pageList += `
+        <li class="page-item ${activeLiCondition}">
+          <a class="page-link" href="#" data-page="${pageNumber}">${pageNumber}</a>
+        </li>
+      `
     }
-    pageList += `<li class="page-item ${nextLiCondition}">
-      <a class="page-link" href="" data-page="${currentPageNumber + 1}">&gt;</a>
-    </li>`
+    pageList += `
+      <li class="page-item ${nextLiCondition}">
+        <a class="page-link" href="#" data-page="${currentPageNumber + 1}">&gt;</a>
+      </li>
+    `
     pageList += `</ul>`
   }
   $("#product-pagination").html(pageList)
