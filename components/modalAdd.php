@@ -64,8 +64,18 @@
           <div class="form-group">
             <label for="new-product-image">Image:</label>
             <div class="input-group">
-              <label class="custom-file-label" for="new-product-image">Choose file</label>
-              <input type="file" class="custom-file-input" id="new-product-image" name="image">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-dark">
+                  <i class="fa-solid fa-image text-light"></i>
+                </span>
+              </div>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="new-product-image" name="image">
+                <label class="custom-file-label" for="new-product-image">Select image (png, jpg or jpeg)</label>
+              </div>
+              <!-- <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+              </div> -->
             </div>
           </div>
           
