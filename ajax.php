@@ -57,8 +57,8 @@ if ($action == "get-products") {
     $productList = [];
   }
 
-  $productsCount = $product->getCountRows();
-  $response = ["count" => $productsCount, "products" => $productList];
+  $productCount = $product->getCountRows();
+  $response = ["count" => $productCount, "products" => $productList];
 
   echo json_encode($response);
   exit();
