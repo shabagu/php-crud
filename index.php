@@ -44,7 +44,7 @@
           <input type="text" class="form-control" placeholder="Search for product...">
         </div>
       </div>
-      <div class="" style="width: 174px;">
+      <div class="col-2">
         <button
           class="btn btn-dark btn-block"
           type="button"

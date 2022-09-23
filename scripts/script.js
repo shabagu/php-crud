@@ -132,10 +132,10 @@ $(document).ready(function() {
               <img src="uploads/${response.image}" alt="" class="rounded">
             </div>
             <div class="col-sm-6 col-md-8">
-              <h4 class="text-primary">${response.name}</h4>
-              <p class="mb-0"><i class="mr-3 fa-solid fa-barcode"></i>${response.code}</p>
-              <p class="mb-0"><i class="mr-3 fa-solid fa-cubes-stacked"></i>${response.amount}</p>
-              <p class="mb-0"><i class="mr-3 fa-solid fa-coins"></i>${response.purchase_price} G</p>
+              <h4 class="text-primary" title="Product name">${response.name}</h4>
+              <p title="Product code" class="mb-0"><i class="mr-3 fa-solid fa-barcode"></i>${response.code}</p>
+              <p title="Product amount" class="mb-0"><i class="mr-3 fa-solid fa-cubes-stacked"></i>${response.amount}</p>
+              <p title="Product purchase price" class="mb-0"><i class="mr-3 fa-solid fa-coins"></i>${response.purchase_price} G</p>
             </div>
           </div>
           `
@@ -198,8 +198,8 @@ function createProductRow(product) {
         <td scope="row"><img src=uploads/${product.image} alt=""></td>
         <td>${product.name}</td>
         <td>${product.code}</td>
-        <td>${product.purchase_price}</td>
         <td>${product.amount}</td>
+        <td>${product.purchase_price} G</td>
         <td>
           <a
             href="#"
