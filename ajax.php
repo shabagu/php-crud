@@ -6,7 +6,7 @@ if (!empty($action)) {
   $product = new Product();
 }
 
-// add-product action
+// submit product form action
 if ($action == "add-product" && !empty($_POST)) {
   $name = $_POST["name"];
   $code = $_POST["code"];
@@ -33,11 +33,15 @@ if ($action == "add-product" && !empty($_POST)) {
       "purchase_price" => $purchasePrice,
     ];
   }
-  
-  $productId = $product->addRow($productData);
+
+  if ($productId) {
+    $product->updateRow($productData, $productId);
+  } else {
+    $productId = $product->addRow($productData);
+  }
 
   if (!empty($productId)) {
-    $response = $product->getSingleRow('id', $productId);
+    $response = $product->getSingleRow("id", $productId);
     
     echo json_encode($response);
     exit();
@@ -63,3 +67,17 @@ if ($action == "get-products") {
   echo json_encode($response);
   exit();
 }
+
+// update-product action
+if ($action == "update-product") {
+  $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
+
+  if (!empty($productId)) {
+    $response = $product->getSingleRow("id", $productId);
+
+    echo json_encode($response);
+    exit();
+  }
+}
+
+// todo -->> continue watching 04:10:00+

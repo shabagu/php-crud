@@ -67,7 +67,7 @@
     <input type="hidden" value="1" name="current-page" id="current-page">
 
     <!-- modal forms -->
-    <?php include "components/modalAdd.php"; ?>
+    <?php include "components/modalForm.php"; ?>
     <?php include "components/modalView.php"; ?>
 
   </div>

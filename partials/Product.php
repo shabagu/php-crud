@@ -2,20 +2,19 @@
 require_once "Database.php";
 class Product extends Database
 {
-  protected $tableName="product";
+  protected $tableName = "product";
 
   // add row
   public function addRow($data) {
 
     if (!empty($data)) {
-      $fields=$placeholder=[];
+      $fields = $placeholder = [];
 
       foreach ($data as $field => $value) {
         $fields[] = $field;
         $placeholder[] = ":{$field}";
       }
     }
-
   # $sql = "INSERT INTO {$this->tableName} (name, code, amount, purchase_price) VALUES (:name, :code, :amount, :purchase_price)";
     $sql = "INSERT INTO {$this->tableName} (" . implode(",", $fields) . ") VALUES (" . implode(",", $placeholder) . ")";    
     $statement = $this->connection->prepare($sql);
@@ -61,7 +60,7 @@ class Product extends Database
 
   // get single row
   public function getSingleRow($field, $value) {
-    $sql = "SELECT * FROM {$this->tableName} WHERE {$field}=:{$field}";
+    $sql = "SELECT * FROM {$this->tableName} WHERE {$field} = :{$field}";
     $statement = $this->connection->prepare($sql);
     $statement->execute([":{$field}" => $value]);
     if ($statement->rowCount() > 0) {
@@ -99,6 +98,33 @@ class Product extends Database
 
 
   // update product
+  public function updateRow($data, $id) {
+    if (!empty($data)) {
+      $fields = "";
+      $counter = 1;
+      $fieldCount = count($data);
+
+      foreach($data as $field => $value) {
+        $fields .= "{$field} = :{$field}";
+        if ($counter < $fieldCount) {
+          $fields .= ", ";
+        }
+        $counter++;
+      }
+    }
+    $sql = "UPDATE {$this->tableName} SET {$fields} WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    try {
+      $this->connection->beginTransaction();
+      $data["id"] = $id;
+      $statement->execute($data);
+      $this->connection->commit();
+      
+    } catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+      $this->connection->rollBack();
+    }
+  }
 
 
   // delete product

@@ -21,11 +21,15 @@
     border: solid 1px #343a40;
 }
 
+
 /* file input changing */
 .custom-file-label::after {
   color: white;
   background-color: #343a40;
   content: "Browse ...";
+}
+.custom-file-label {
+    color: #6c757d;
 }
 
 
