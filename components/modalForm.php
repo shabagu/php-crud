@@ -82,14 +82,14 @@
                 </span>
               </div>
               <input
-              type="number"
-              min="0"
-              class="form-control"
-              placeholder="Product purchase price"
-              autocomplete="off"
-              required="required"
-              id="product-purchase-price"
-              name="purchase-price"
+                type="number"
+                min="0"
+                class="form-control"
+                placeholder="Product purchase price"
+                autocomplete="off"
+                required="required"
+                id="product-purchase-price"
+                name="purchase-price"
               >
               <div class="input-group-append">
                 <span class="input-group-text bg-dark text-light" style="user-select: none;">&nbsp;G&nbsp;</span>
@@ -114,9 +114,10 @@
                 >
                 <label class="custom-file-label" for="product-image">Image file (png, jpg or jpeg)</label>
               </div>
-              <!-- <div class="input-group-append"> -->
-                <!-- <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button> -->
-              <!-- </div> -->
+              <div class="input-group-append">
+                <!-- todo: clear image button -->
+                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Clear</button> 
+              </div>
             </div>
           </div>
           

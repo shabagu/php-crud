@@ -93,8 +93,13 @@ $(document).ready(function() {
           console.log("Performing delete request ...")
         },
         success: function(response) {
-          if (response.deleted == 1) {
-            $(".display-message").html("Product successfully deleted").fadeIn().delay(2500).fadeOut()
+          if (response.deleted) {
+            $(".display-message")
+              .html("Product successfully deleted")
+              .fadeIn()
+              .delay(2500)
+              .fadeOut()
+
             getProducts()
             console.log("Product successfully deleted!")
           }
@@ -105,6 +110,43 @@ $(document).ready(function() {
         }
       })
     }
+  })
+
+  // onclick event for viewing product card
+  $(document).on("click", "a.product-view", function(event) {
+    event.preventDefault()
+    let productId = $(this).data("id")
+    $.ajax({
+      url: "/php-crud/ajax.php",
+      type: "get",
+      dataType: "json",
+      data: {id: productId, action: "get-product-to-update"},
+      beforeSend: function() {
+        console.log("Data is loading ...")
+      },
+      success: function(response) {
+        if (response) {
+          const productCard = `
+          <div class="row">
+            <div class="col-sm-6 col-md-4">
+              <img src="uploads/${response.image}" alt="" class="rounded">
+            </div>
+            <div class="col-sm-6 col-md-8">
+              <h4 class="text-primary">${response.name}</h4>
+              <p class="mb-0"><i class="mr-3 fa-solid fa-barcode"></i>${response.code}</p>
+              <p class="mb-0"><i class="mr-3 fa-solid fa-cubes-stacked"></i>${response.amount}</p>
+              <p class="mb-0"><i class="mr-3 fa-solid fa-coins"></i>${response.purchase_price} G</p>
+            </div>
+          </div>
+          `
+          $("#product-card").html(productCard)
+        }
+      },
+      error: function(request, error) {
+        console.log(arguments)
+        console.log("Error: " + error)
+      }
+    })
   })
 
 
@@ -134,7 +176,8 @@ function getProducts() {
         $("#product-table tbody").html(productRows)
         let productCount = response.count
         let pageCount = Math.ceil(parseInt(productCount) / 4)
-        // let currentPageNumber = $("#current-page").val() // todo -->> ????
+        // let currentPageNumber = $("#current-page").val()
+        // todo -->> ???? is previous line needed / zero rows bug fix (when deleting last row in page)
         pagination(pageCount, currentPageNumber)
       }
     },
@@ -152,19 +195,38 @@ function createProductRow(product) {
   if (product) {
     productRow = `
       <tr>
-        <td scope="row"><img src=uploads/${product.image}></td>
+        <td scope="row"><img src=uploads/${product.image} alt=""></td>
         <td>${product.name}</td>
         <td>${product.code}</td>
         <td>${product.purchase_price}</td>
         <td>${product.amount}</td>
         <td>
-          <a href="#" title="View product card" data-id="${product.id}" class="product-view ml-3 text-dark" data-toggle="modal" data-target="#product-view-modal">
+          <a
+            href="#"
+            title="View product card"
+            data-id="${product.id}"
+            class="product-view ml-3 text-dark"
+            data-toggle="modal"
+            data-target="#product-view-modal"
+          >
             <i class="fa-lg fa-solid fa-eye"></i>
           </a>
-          <a href="#" title="Edit product data" data-id="${product.id}" class="product-update ml-3 text-dark" data-toggle="modal" data-target="#product-form-modal">
+          <a
+            href="#"
+            title="Edit product data"
+            data-id="${product.id}"
+            class="product-update ml-3 text-dark"
+            data-toggle="modal"
+            data-target="#product-form-modal"
+          >
             <i class="fa-lg fa-solid fa-pencil"></i>
           </a>
-          <a href="#" title="Delete product" data-id="${product.id}" class="product-delete ml-3 text-danger">
+          <a
+            href="#"
+            title="Delete product"
+            data-id="${product.id}"
+            class="product-delete ml-3 text-danger"
+          >
             <i class="fa-lg fa-solid fa-trash-can"></i>
           </a>
         </td>

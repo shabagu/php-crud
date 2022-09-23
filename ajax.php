@@ -96,3 +96,5 @@ if ($action == "delete-product") {
     exit();
   }
 }
+
+// todo: rename action names

@@ -8,18 +8,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- product name -->
         <div class="container" id="product-card">
-          <h4>Product data</h4>
+          <h4>Product card</h4>
         </div>
-        <!-- product code -->
-
-        <!-- product amount -->
-
-        <!-- product purchase price -->
-
-        <!-- image -->
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
