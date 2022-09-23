@@ -7,7 +7,7 @@ if (!empty($action)) {
 }
 
 // submit product form action
-if ($action == "add-product" && !empty($_POST)) {
+if ($action == "submit-product-form" && !empty($_POST)) {
   $name = $_POST["name"];
   $code = $_POST["code"];
   $amount = $_POST["amount"];
@@ -48,7 +48,7 @@ if ($action == "add-product" && !empty($_POST)) {
   }
 }
 
-// get-products action
+// get products action
 if ($action == "get-products") {
   $page = (!empty($_GET["page"])) ? $_GET["page"] : 1;
   $limit = 4;
@@ -68,8 +68,8 @@ if ($action == "get-products") {
   exit();
 }
 
-// update-product action
-if ($action == "update-product") {
+// get product to update action
+if ($action == "get-product-to-update") {
   $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
 
   if (!empty($productId)) {
@@ -80,4 +80,4 @@ if ($action == "update-product") {
   }
 }
 
-// todo -->> continue watching 04:10:00+
+// todo -->> continue watching 04:12:00+

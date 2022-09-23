@@ -1,4 +1,4 @@
-<div class="modal fade" id="product-add-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="product-form-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,7 +7,7 @@
           <span>&times;</span>
         </button>
       </div>
-      <form id="product-add-form" method="post" enctype="multipart/form-data">
+      <form id="product-form" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <!-- product name -->
           <div class="form-group">
@@ -124,7 +124,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-dark">Submit</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <input type="hidden" name="action" value="add-product">
+          <input type="hidden" name="action" value="submit-product-form">
           <input type="hidden" name="product-id" id="product-id" value="">
         </div>
       </form>

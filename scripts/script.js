@@ -5,7 +5,7 @@ $(document).ready(function() {
   getProducts()
   
   // submitting product form
-  $(document).on("submit", "#product-add-form", function(event) {
+  $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
     $.ajax({
       url: "/php-crud/ajax.php",
@@ -21,8 +21,8 @@ $(document).ready(function() {
         console.log("Data successfully uploaded!")
         console.log(response)
         if (response) {
-          $("#product-add-modal").modal("hide")
-          $("#product-add-form")[0].reset()
+          $("#product-form-modal").modal("hide")
+          $("#product-form")[0].reset()
           getProducts()
         }
       },
@@ -43,14 +43,14 @@ $(document).ready(function() {
     // $(this).parent().addClass("active")
   })
 
-  // onclick event for getting product data to edit
+  // onclick event for getting product to update
   $(document).on("click", "a.product-update", function() {
     let productId = $(this).data("id")
     $.ajax({
       url: "/php-crud/ajax.php",
       type: "get",
       dataType: "json",
-      data: {id: productId, action: "update-product"},
+      data: {id: productId, action: "get-product-to-update"},
       beforeSend: function() {
         console.log("Data is loading ...")
       },
@@ -126,10 +126,10 @@ function createProductRow(product) {
           <a href="#" title="View product card" data-id="${product.id}" class="product-view ml-3 text-dark" data-toggle="modal" data-target="#product-view-modal">
             <i class="fa-lg fa-solid fa-eye"></i>
           </a>
-          <a href="#" title="Edit product data" data-id="${product.id}" class="product-update ml-3  text-dark" data-toggle="modal" data-target="#product-add-modal">
+          <a href="#" title="Edit product data" data-id="${product.id}" class="product-update ml-3  text-dark" data-toggle="modal" data-target="#product-form-modal">
             <i class="fa-lg fa-solid fa-pencil"></i>
           </a>
-          <a href="#" title="Delete product" data-id="${product.id}" class="product-delete ml-3  text-danger" data-toggle="modal" data-target="#product-add-modal">
+          <a href="#" title="Delete product" data-id="${product.id}" class="product-delete ml-3  text-danger" data-toggle="modal" data-target="#product-form-modal">
             <i class="fa-lg fa-solid fa-trash-can"></i>
           </a>
         </td>
