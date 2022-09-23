@@ -6,7 +6,12 @@
           <i class="fa-solid fa-magnifying-glass text-light"></i>
         </span>
       </div>
-      <input type="text" class="form-control" placeholder="Search for product...">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search for product..."
+        id="search-input"
+      >
     </div>
   </div>
   <div class="col-2">

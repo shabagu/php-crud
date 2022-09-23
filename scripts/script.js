@@ -51,7 +51,10 @@ $(document).ready(function() {
       url: "/php-crud/ajax.php",
       type: "get",
       dataType: "json",
-      data: {id: productId, action: "get-product-to-update"},
+      data: {
+        id: productId,
+        action: "get-product-to-update"
+      },
       beforeSend: function() {
         console.log("Data is loading ...")
       },
@@ -88,7 +91,10 @@ $(document).ready(function() {
         url: "/php-crud/ajax.php",
         type: "get",
         dataType: "json",
-        data: {id: productId, action: "delete-product"},
+        data: {
+          id: productId,
+          action: "delete-product"
+        },
         beforeSend: function() {
           console.log("Performing delete request ...")
         },
@@ -120,7 +126,10 @@ $(document).ready(function() {
       url: "/php-crud/ajax.php",
       type: "get",
       dataType: "json",
-      data: {id: productId, action: "get-product-to-update"},
+      data: {
+        id: productId,
+        action: "get-product-to-update"
+      },
       beforeSend: function() {
         console.log("Data is loading ...")
       },
@@ -149,6 +158,42 @@ $(document).ready(function() {
     })
   })
 
+  // event for search
+  $(document).on("keyup", "#search-input", function() {
+    const searchText = $(this).val()
+    if (searchText.length > 0) {
+      $.ajax({
+        url: "/php-crud/ajax.php",
+        type: "get",
+        dataType: "json",
+        data: {
+          searchText: searchText,
+          action: "search-products"
+        },
+        beforeSend: function() {
+          console.log("Data is loading ...")
+        },
+        success: function(response) {
+          if (response) {
+            let productRows = ""
+            $.each(response, function(index, product) {
+              productRows += createProductRow(product)
+            })
+            $("#product-table tbody").html(productRows)
+            $("#product-pagination").hide()
+          }
+        },
+        error: function(request, error) {
+          console.log(arguments)
+          console.log("Error: " + error)
+        }
+      })
+    } else {
+      getProducts();
+      $("#product-pagination").show()
+    }
+  })
+
 
 })
 
@@ -161,7 +206,10 @@ function getProducts() {
     url: "/php-crud/ajax.php",
     type: "get",
     dataType: "json",
-    data: {page: currentPageNumber, action: "get-products"},
+    data: {
+      page: currentPageNumber,
+      action: "get-products"
+    },
     beforeSend: function() {
       console.log("Data is loading ...")
     },

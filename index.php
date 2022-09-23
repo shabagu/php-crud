@@ -1,4 +1,3 @@
-<!-- 4:20:00 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

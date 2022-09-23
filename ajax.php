@@ -97,4 +97,14 @@ if ($action == "delete-product") {
   }
 }
 
+//search products action
+if ($action == "search-products") {
+  $searchText = (!empty($_GET["searchText"])) ? trim($_GET["searchText"]) : "";
+
+  $response = $product->searchRows($searchText);
+
+  echo json_encode($response);
+  exit();
+}
+
 // todo: rename action names

@@ -63,6 +63,7 @@ class Product extends Database
     $sql = "SELECT * FROM {$this->tableName} WHERE {$field} = :{$field}";
     $statement = $this->connection->prepare($sql);
     $statement->execute([":{$field}" => $value]);
+
     if ($statement->rowCount() > 0) {
       $result = $statement->fetch(PDO::FETCH_ASSOC);
     } else {
@@ -143,7 +144,18 @@ class Product extends Database
   }
 
   // search product
+  public function searchRows($searchText, $start = 0, $limit = 4) {
+    $sql = "SELECT * FROM {$this->tableName} WHERE name LIKE :search ORDER BY id DESC LIMIT {$start}, {$limit}";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute([":search" => "%{$searchText}%"]);
 
+    if ($statement->rowCount() > 0) {
+      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+      $result = [];
+    }
+    return $result;
+  }
 
 
 }

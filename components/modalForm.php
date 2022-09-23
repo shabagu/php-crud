@@ -116,7 +116,7 @@
               </div>
               <div class="input-group-append">
                 <!-- todo: clear image button -->
-                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Clear</button> 
+                <button class="btn btn-outline-secondary" type="button" id="sdfijhasdkadsfkjabsdkf">Clear</button> 
               </div>
             </div>
           </div>
