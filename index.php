@@ -1,7 +1,4 @@
-<?php
-// require_once "partials/connect.php";
-// $db = new Database();
-?>
+<!-- 4:20:00 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,8 +28,9 @@
   <title>PHP CRUD</title>
 </head>
 <body>
-  <h1 class="bg-dark text-light text-center py-2">PHP CRUD 3:36:00</h1>
+  <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
   <div class="container">
+    <div class="display-message"></div>
 
     <!-- search form -->
     <div class="row my-3">

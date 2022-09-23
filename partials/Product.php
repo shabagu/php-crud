@@ -128,7 +128,19 @@ class Product extends Database
 
 
   // delete product
-
+  public function deleteRow($id) {
+    $sql = "DELETE FROM {$this->tableName} WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    try {
+      $statement->execute([":id" => $id]);
+      if ($statement->rowCount() > 0) {
+        return true;
+      }
+    } catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+      return false;
+    }
+  }
 
   // search product
 

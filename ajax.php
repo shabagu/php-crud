@@ -80,4 +80,19 @@ if ($action == "get-product-to-update") {
   }
 }
 
-// todo -->> continue watching 04:12:00+
+// delete product action
+if ($action == "delete-product") {
+  $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
+
+  if (!empty($productId)) {
+    $isDeleted = $product->deleteRow($productId);
+    if ($isDeleted) {
+      $response = ["deleted" => true];
+    } else {
+      $response = ["deleted" => false];
+    }
+    
+    echo json_encode($response);
+    exit();
+  }
+}
