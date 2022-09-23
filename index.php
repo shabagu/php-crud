@@ -27,13 +27,12 @@
   <title>PHP CRUD</title>
 </head>
 <body>
-
+  <!-- (05:25:00 - revision) -->
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
-
   <div class="container">
 
     <!-- todo: toast -->
-    <div class="display-message"></div>
+    <div class="display-message text-center bg-dark text-light mb-3"></div>
 
     <!-- search form -->
     <?php include "components/productSearch.php"; ?>

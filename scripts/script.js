@@ -7,6 +7,7 @@ $(document).ready(function() {
   // submitting product form
   $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
+    let message = $("#product-id").val().length > 0 ? "Product has been updated successfully" : "New product has been created successfully"
     $.ajax({
       url: "/php-crud/ajax.php",
       type: "post",
@@ -23,6 +24,7 @@ $(document).ready(function() {
         if (response) {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
+          $(".display-message").html(message).fadeIn().delay(2500).fadeOut()
           getProducts()
         }
       },
@@ -100,12 +102,7 @@ $(document).ready(function() {
         },
         success: function(response) {
           if (response.deleted) {
-            $(".display-message")
-              .html("Product successfully deleted")
-              .fadeIn()
-              .delay(2500)
-              .fadeOut()
-
+            $(".display-message").html("Product has been deleted successfully").fadeIn().delay(2500).fadeOut()
             getProducts()
             console.log("Product successfully deleted!")
           }
