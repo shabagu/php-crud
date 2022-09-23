@@ -72,6 +72,12 @@ $(document).ready(function() {
     })
   })
 
+  // onclick event for reseting product form when adding new product
+  $("#product-add-button").on("click", function() {
+    $("#product-form")[0].reset()
+    $("#product-id").val("")
+  })
+
 
 })
 

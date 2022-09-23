@@ -47,7 +47,13 @@
         </div>
       </div>
       <div class="" style="width: 174px;">
-        <button class="btn btn-dark btn-block" type="button" data-toggle="modal" data-target="#product-form-modal">Add product</button>
+        <button
+          class="btn btn-dark btn-block"
+          type="button"
+          data-toggle="modal"
+          data-target="#product-form-modal"
+          id="product-add-button"
+        >Add product</button>
       </div>
     </div>
 
