@@ -7,7 +7,8 @@ $(document).ready(function() {
   // submitting product form
   $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
-    let message = $("#product-id").val().length > 0 ? "Product has been updated successfully" : "New product has been created successfully"
+    const isNew = $("#product-id").val().length > 0 ? false : true
+    const message = isNew ? "New product has been added successfully" : "Product has been updated successfully"
     $.ajax({
       url: "/php-crud/ajax.php",
       type: "post",
@@ -24,7 +25,10 @@ $(document).ready(function() {
         if (response) {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
-          $(".display-message").html(message).fadeIn().delay(2500).fadeOut()
+          if (isNew){
+            $("#current-page").val(1)
+          }
+          toast(message)
           getProducts()
         }
       },
@@ -102,7 +106,8 @@ $(document).ready(function() {
         },
         success: function(response) {
           if (response.deleted) {
-            $(".display-message").html("Product has been deleted successfully").fadeIn().delay(2500).fadeOut()
+            // $(".display-message").html("Product has been deleted successfully").fadeIn().delay(2500).fadeOut()
+            toast("Product has been deleted successfully")
             getProducts()
             console.log("Product successfully deleted!")
           }
@@ -310,4 +315,8 @@ function pagination(totalNumberOfPages, currentPageNumber) {
     pageList += `</ul>`
   }
   $("#product-pagination").html(pageList)
+}
+
+function toast(message) {
+  $("#toast-box").html(message).fadeIn().delay(2500).fadeOut()
 }

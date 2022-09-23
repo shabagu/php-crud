@@ -32,7 +32,7 @@
   <div class="container">
 
     <!-- todo: toast -->
-    <div class="display-message text-center bg-dark text-light mb-3"></div>
+    <div id="toast-box" class="text-center bg-dark text-light mb-3"></div>
 
     <!-- search form -->
     <?php include "components/productSearch.php"; ?>
