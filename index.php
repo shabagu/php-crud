@@ -28,44 +28,24 @@
   <title>PHP CRUD</title>
 </head>
 <body>
+
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
+
   <div class="container">
+
+    <!-- todo: toast -->
     <div class="display-message"></div>
 
     <!-- search form -->
-    <div class="row my-3">
-      <div class="col-10">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text bg-dark">
-              <i class="fa-solid fa-magnifying-glass text-light"></i>
-            </span>
-          </div>
-          <input type="text" class="form-control" placeholder="Search for product...">
-        </div>
-      </div>
-      <div class="col-2">
-        <button
-          class="btn btn-dark btn-block"
-          type="button"
-          data-toggle="modal"
-          data-target="#product-form-modal"
-          id="product-add-button"
-        >Add product</button>
-      </div>
-    </div>
+    <?php include "components/productSearch.php"; ?>
 
     <!-- product table -->
     <?php include "components/productTable.php"; ?>
 
-    <!-- pagination -->
-    <nav aria-label="Product pagination" id="product-pagination"></nav>
-    <input type="hidden" name="current-page" id="current-page" value="1">
-
     <!-- modal forms -->
     <?php include "components/modalForm.php"; ?>
-    <?php include "components/modalView.php"; ?>
-
+    <?php include "components/modalCard.php"; ?>
+    
   </div>
 </body>
 </html>

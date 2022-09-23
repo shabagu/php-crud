@@ -11,3 +11,6 @@
   </thead>
   <tbody></tbody>
 </table>
+
+<nav aria-label="Product pagination" id="product-pagination"></nav>
+<input type="hidden" name="current-page" id="current-page" value="1">

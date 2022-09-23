@@ -207,7 +207,7 @@ function createProductRow(product) {
             data-id="${product.id}"
             class="product-view ml-3 text-dark"
             data-toggle="modal"
-            data-target="#product-view-modal"
+            data-target="#product-card-modal"
           >
             <i class="fa-lg fa-solid fa-eye"></i>
           </a>
