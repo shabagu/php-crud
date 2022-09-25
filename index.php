@@ -30,9 +30,9 @@
   <!-- todo: (05:25:00 - revision) -->
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
   <div class="container">
-
-    <!-- todo: toast icons and closing button -->
+    
     <!-- todo: rename components extension to .php -->
+    <!-- todo: toast icons and closing button -->
     <?php include "components/toastBox.php"; ?>
     
     <!-- search form -->
@@ -44,7 +44,8 @@
     <!-- modal forms -->
     <?php include "components/modalForm.php"; ?>
     <?php include "components/modalCard.php"; ?>
-
+    
   </div>
+  <div id="toast-container"></div>
 </body>
 </html>

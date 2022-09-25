@@ -1,8 +1,5 @@
 // after the document has been loaded
 $(document).ready(function() {
-  
-  // fixing toast glitch
-  // toastGlitchFix()
 
   // calling getProducts()
   getProducts()
@@ -32,7 +29,7 @@ $(document).ready(function() {
           if (isNew){
             $("#current-page").val(1)
           }
-          toast(toastMessage, toastAction)
+          createToast(toastMessage, toastAction)
           getProducts()
         }
       },
@@ -109,7 +106,7 @@ $(document).ready(function() {
         success: function(response) {
           if (response.deleted) {
             console.log("Product successfully deleted!")
-            toast("Product has been deleted successfully", "delete")
+            createToast("Product has been deleted successfully", "delete")
             getProducts()
           }
         },
@@ -270,7 +267,7 @@ function createProductRow(product) {
             data-toggle="modal"
             data-target="#product-form-modal"
           >
-            <i class="fa-lg fa-solid fa-pencil"></i>
+            <i class="fa-lg fa-solid fa-pen-to-square"></i>
           </a>
           <a
             href="#"
@@ -318,41 +315,27 @@ function pagination(totalNumberOfPages, currentPageNumber) {
   $("#product-pagination").html(pageList)
 }
 
-function toast(message, action) {
-
+// create toast function
+function createToast(message, action) {
   let iconName
   switch (action) {
-    case "create" : iconName = "fa-plus"
+    case "create" : iconName = "fa-square-plus"
       break
-    case "update" : iconName = "fa-pencil"
+    case "update" : iconName = "fa-pen-to-square"
       break
     case "delete" : iconName = "fa-trash-can"
       break
-    default : iconName = ""
+    default : iconName = "fa-question"
   }
-
-  let icon = `<i class="fa-solid ${iconName} pr-2"></i>`
-
-  $("#toast-icon").html(icon)
-  $("#toast-message").html(message)
-
-  $("#toast-box").fadeIn().delay(2500).fadeOut()
-
-  // $("#toast-box").promise().done(function () {
-  //   $("#toast-box").fadeIn().delay(2500).fadeOut()
-  // })
-  
-  // $.when (toast()).done(function() {
-  //     $("#toast-box").fadeIn().delay(2500).fadeOut()
-  // })
-}
-
-// function toastGlitchFix() {
-//   $("#toast-box").hide()
-//   $("#toast-box").css("width", "400px")
-//   $("#toast-box").css("padding", "16px")
-// }
-
-function createToast() {
-  $("toast-box")
+  let icon = `<i class="fa-lg fa-solid ${iconName} pr-2"></i>`
+  let toast = `
+    <div class="toast-box bg-dark text-light">
+      <div class="mb-2">${icon}</div>
+      <div>${message}</div>
+    </div>
+  `
+  $("#toast-container").append(toast)
+  $(".toast-box").last().fadeIn().delay(2000).fadeOut(1000, function() {
+    $(this).remove()
+  })
 }

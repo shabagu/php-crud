@@ -12,19 +12,33 @@ img {
   height: 120px;
 }
 
-#toast-box {
+#toast-container {
   position: absolute;
-  bottom: 0;
   right: 0;
+  top: 0;
 
-  margin: 16px;
-  padding: 16px;
-  
   width: 400px;
-  height: 120px;
+  height: 100%;
+  padding: 16px;
 
-  z-index: 1000;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  /* border: 2px solid red; */
+
+  pointer-events: none;
+}
+
+.toast-box {
+  width: 100%;
+  height: 120px;
+  padding: 16px;
+  margin: 8px;
+
+  z-index: 100;
   border: 2px solid #fff;
-  border-radius: 16px;
+  border-radius: 8px;
   outline: 2px solid #343a40;
+
+  pointer-events: all;
 }
