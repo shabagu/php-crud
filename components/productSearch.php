@@ -21,6 +21,9 @@
       data-toggle="modal"
       data-target="#product-form-modal"
       id="product-add-button"
-    >Add product</button>
+    >
+    <i class="fa-solid fa-plus pr-2"></i>
+    Add product
+  </button>
   </div>
 </div>

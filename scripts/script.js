@@ -1,5 +1,8 @@
-// after document has been loaded
+// after the document has been loaded
 $(document).ready(function() {
+  
+  // fixing toast glitch
+  // toastGlitchFix()
 
   // calling getProducts()
   getProducts()
@@ -8,7 +11,8 @@ $(document).ready(function() {
   $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
     const isNew = $("#product-id").val().length > 0 ? false : true
-    const message = isNew ? "New product has been added successfully" : "Product has been updated successfully"
+    const toastMessage = isNew ? "New product has been added successfully" : "Product has been updated successfully"
+    const toastAction = isNew ? "create" : "update"
     $.ajax({
       url: "/php-crud/ajax.php",
       type: "post",
@@ -28,7 +32,7 @@ $(document).ready(function() {
           if (isNew){
             $("#current-page").val(1)
           }
-          toast(message)
+          toast(toastMessage, toastAction)
           getProducts()
         }
       },
@@ -45,8 +49,6 @@ $(document).ready(function() {
     const targetPage = $(this).data("page")
     $("#current-page").val(targetPage)
     getProducts()
-    // $(this).parent().siblings().removeClass("active")
-    // $(this).parent().addClass("active")
   })
 
   // onclick event for getting product to update
@@ -106,10 +108,9 @@ $(document).ready(function() {
         },
         success: function(response) {
           if (response.deleted) {
-            // $(".display-message").html("Product has been deleted successfully").fadeIn().delay(2500).fadeOut()
-            toast("Product has been deleted successfully")
-            getProducts()
             console.log("Product successfully deleted!")
+            toast("Product has been deleted successfully", "delete")
+            getProducts()
           }
         },
         error: function(request, error) {
@@ -317,6 +318,41 @@ function pagination(totalNumberOfPages, currentPageNumber) {
   $("#product-pagination").html(pageList)
 }
 
-function toast(message) {
-  $("#toast-box").html(message).fadeIn().delay(2500).fadeOut()
+function toast(message, action) {
+
+  let iconName
+  switch (action) {
+    case "create" : iconName = "fa-plus"
+      break
+    case "update" : iconName = "fa-pencil"
+      break
+    case "delete" : iconName = "fa-trash-can"
+      break
+    default : iconName = ""
+  }
+
+  let icon = `<i class="fa-solid ${iconName} pr-2"></i>`
+
+  $("#toast-icon").html(icon)
+  $("#toast-message").html(message)
+
+  $("#toast-box").fadeIn().delay(2500).fadeOut()
+
+  // $("#toast-box").promise().done(function () {
+  //   $("#toast-box").fadeIn().delay(2500).fadeOut()
+  // })
+  
+  // $.when (toast()).done(function() {
+  //     $("#toast-box").fadeIn().delay(2500).fadeOut()
+  // })
+}
+
+// function toastGlitchFix() {
+//   $("#toast-box").hide()
+//   $("#toast-box").css("width", "400px")
+//   $("#toast-box").css("padding", "16px")
+// }
+
+function createToast() {
+  $("toast-box")
 }

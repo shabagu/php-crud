@@ -27,23 +27,24 @@
   <title>PHP CRUD</title>
 </head>
 <body>
-  <!-- (05:25:00 - revision) -->
+  <!-- todo: (05:25:00 - revision) -->
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
   <div class="container">
 
-    <!-- todo: toast -->
-    <div id="toast-box" class="text-center bg-dark text-light mb-3"></div>
-
+    <!-- todo: toast icons and closing button -->
+    <!-- todo: rename components extension to .php -->
+    <?php include "components/toastBox.php"; ?>
+    
     <!-- search form -->
     <?php include "components/productSearch.php"; ?>
-
+    
     <!-- product table -->
     <?php include "components/productTable.php"; ?>
-
+    
     <!-- modal forms -->
     <?php include "components/modalForm.php"; ?>
     <?php include "components/modalCard.php"; ?>
-    
+
   </div>
 </body>
 </html>
