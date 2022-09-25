@@ -23,7 +23,9 @@
 .pagination {
     user-select: none;
 }
-
+.pagination li.disabled a {
+    color: #cbced1 !important;
+}
 
 /* file input changing */
 .custom-file-label::after {

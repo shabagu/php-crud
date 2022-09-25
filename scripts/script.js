@@ -254,7 +254,8 @@ function getProducts() {
         let productCount = response.count
         let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
         // let currentPageNumber = $("#current-page").val()
-        // todo -->> ???? is previous line needed / zero rows bug fix (when deleting last row in page)
+        // todo: is previous line actually needed ????
+        // todo: zero rows bug fix (when deleting last row in page)
         pagination(pageCount, currentPageNumber)
       }
     },
@@ -323,7 +324,12 @@ function pagination(totalNumberOfPages, currentPageNumber) {
     pageList += `<ul class="pagination justify-content-center">`
     pageList += `
       <li class="page-item ${previousLiCondition}">
-        <a class="page-link" href="#" data-page="${currentPageNumber - 1}">&lt; Previous</a>
+        <a class="page-link" href="#" data-page="1">&lt;&lt;</a>
+      </li>
+    `
+    pageList += `
+      <li class="page-item ${previousLiCondition}">
+        <a class="page-link" href="#" data-page="${currentPageNumber - 1}">&lt;</a>
       </li>
     `
     for (let pageNumber = 1; pageNumber <= totalNumberOfPages; pageNumber++) {
@@ -336,9 +342,15 @@ function pagination(totalNumberOfPages, currentPageNumber) {
     }
     pageList += `
       <li class="page-item ${nextLiCondition}">
-        <a class="page-link" href="#" data-page="${currentPageNumber + 1}">Next &gt;</a>
+        <a class="page-link" href="#" data-page="${currentPageNumber + 1}">&gt;</a>
       </li>
     `
+    pageList += `
+      <li class="page-item ${nextLiCondition}">
+        <a class="page-link" href="#" data-page="${totalNumberOfPages}">&gt;&gt;</a>
+      </li>
+    `
+
     pageList += `</ul>`
   }
   $("#pagination").html(pageList)
