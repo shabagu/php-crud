@@ -208,6 +208,15 @@ $(document).ready(function() {
     }
   })
 
+  // onclick event for clearing search input
+  $(document).on("click", "#search-clear", function(event) {
+    event.preventDefault()
+    $("#current-page").val(1)
+    $("#search-input").val("")
+    $("#pagination").show()
+    getProducts()
+  })
+
   // onclick event for closing toast
   $(document).on("click", ".toast-box .toast-close", function() {
     $(this).parents(".toast-box").remove()
