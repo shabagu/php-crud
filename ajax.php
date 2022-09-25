@@ -49,7 +49,7 @@ if ($action == "submit-product-form" && !empty($_POST)) {
 }
 
 // get products action
-if ($action == "get-products") {
+if ($action == "get-all-products") {
   $page = (!empty($_GET["page"])) ? $_GET["page"] : 1;
   $limit = 4;
   $start = ($page - 1) * $limit;
@@ -69,7 +69,7 @@ if ($action == "get-products") {
 }
 
 // get product to update action
-if ($action == "get-product-to-update") {
+if ($action == "get-single-product") {
   $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
 
   if (!empty($productId)) {

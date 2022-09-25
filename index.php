@@ -31,8 +31,6 @@
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
   <div class="container">
     
-    <!-- todo: toast icons and closing button -->
-    
     <!-- search form -->
     <?php include "components/productSearch.html"; ?>
     

@@ -58,7 +58,7 @@ $(document).ready(function() {
       dataType: "json",
       data: {
         id: productId,
-        action: "get-product-to-update"
+        action: "get-single-product"
       },
       beforeSend: function() {
         console.log("Data is loading ...")
@@ -128,7 +128,7 @@ $(document).ready(function() {
       dataType: "json",
       data: {
         id: productId,
-        action: "get-product-to-update"
+        action: "get-single-product"
       },
       beforeSend: function() {
         console.log("Data is loading ...")
@@ -212,7 +212,7 @@ function getProducts() {
     dataType: "json",
     data: {
       page: currentPageNumber,
-      action: "get-products"
+      action: "get-all-products"
     },
     beforeSend: function() {
       console.log("Data is loading ...")
