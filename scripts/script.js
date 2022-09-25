@@ -18,11 +18,11 @@ $(document).ready(function() {
       processData: false,
       contentType: false,
       beforeSend: function() {
-        console.log("Data is now uploading ...")
+        // console.log("Data is now uploading ...")
       },
       success: function(response) {
-        console.log("Data successfully uploaded!")
-        console.log(response)
+        // console.log("Data successfully uploaded!")
+        // console.log(response)
         if (response) {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
@@ -73,11 +73,11 @@ $(document).ready(function() {
         action: "get-single-product"
       },
       beforeSend: function() {
-        console.log("Data is loading ...")
+        // console.log("Data is loading ...")
       },
       success: function(response) {
-        console.log("Data successfully loaded!")
-        console.log(response)
+        // console.log("Data successfully loaded!")
+        // console.log(response)
         if (response) {
           $("#product-name").val(response.name)
           $("#product-code").val(response.code)
@@ -113,11 +113,11 @@ $(document).ready(function() {
           action: "delete-product"
         },
         beforeSend: function() {
-          console.log("Performing delete request ...")
+          // console.log("Performing delete request ...")
         },
         success: function(response) {
           if (response.deleted) {
-            console.log("Product successfully deleted!")
+            // console.log("Product successfully deleted!")
             createToast("Product has been deleted successfully", "delete")
             getProducts()
           }
@@ -143,7 +143,7 @@ $(document).ready(function() {
         action: "get-single-product"
       },
       beforeSend: function() {
-        console.log("Data is loading ...")
+        // console.log("Data is loading ...")
       },
       success: function(response) {
         if (response) {
@@ -185,7 +185,7 @@ $(document).ready(function() {
           action: "search-products"
         },
         beforeSend: function() {
-          console.log("Data is loading ...")
+          // console.log("Data is loading ...")
         },
         success: function(response) {
           if (response) {
@@ -243,8 +243,8 @@ function getProducts() {
       console.log("Data is loading ...")
     },
     success: function(response) {
-      console.log("Data successfully loaded!")
-      console.log(response)
+      // console.log("Data successfully loaded!")
+      // console.log(response)
       if (response.products) {
         let productRows = ""
         $.each(response.products, function(index, product) {
@@ -253,8 +253,6 @@ function getProducts() {
         $("#product-table tbody").html(productRows)
         let productCount = response.count
         let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
-        // let currentPageNumber = $("#current-page").val()
-        // todo: is previous line actually needed ????
         // todo: zero rows bug fix (when deleting last row in page)
         pagination(pageCount, currentPageNumber)
       }
@@ -383,5 +381,3 @@ function createToast(message, action) {
     $(this).remove()
   })
 }
-
-// todo: comment all console logs
