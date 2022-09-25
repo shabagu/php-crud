@@ -20,6 +20,9 @@
     background-color: #343a40 !important;
     border: solid 1px #343a40;
 }
+.pagination {
+    user-select: none;
+}
 
 
 /* file input changing */
@@ -33,7 +36,11 @@
 }
 
 
-/* icon hover underline fix */
+/* product table icon hover underline fix */
 #product-table a:hover {
     text-decoration: none !important;   
+}
+/* product table icon selectability fix */
+#product-table tr td:last-child {
+    user-select: none;
 }

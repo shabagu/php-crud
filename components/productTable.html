@@ -12,5 +12,34 @@
   <tbody></tbody>
 </table>
 
-<nav aria-label="Product pagination" id="product-pagination"></nav>
-<input type="hidden" name="current-page" id="current-page" value="1">
+<div id="pagination-menu">
+  <div id="pagination-dropdown" class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle bg-light text-dark"
+      type="button"
+      id="dropdown-menu"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      Page limit: 7
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdown-menu">
+      <button class="dropdown-item page-limit-button" type="button" value="1">1</button>
+      <button class="dropdown-item page-limit-button" type="button" value="4">4</button>
+      <button class="dropdown-item page-limit-button" type="button" value="5">5</button>
+      <button class="dropdown-item page-limit-button" type="button" value="6">6</button>
+      <button class="dropdown-item page-limit-button" type="button" value="7">7</button>
+      <button class="dropdown-item page-limit-button" type="button" value="8">8</button>
+      <button class="dropdown-item page-limit-button" type="button" value="10">10</button>
+      <button class="dropdown-item page-limit-button" type="button" value="25">25</button>
+      <button class="dropdown-item page-limit-button" type="button" value="50">50</button>
+      <button class="dropdown-item page-limit-button" type="button" value="100">100</button>
+    </div>
+  </div>
+  <div id="pagination-pages-box">
+    <nav aria-label="Product pagination" id="pagination"></nav>
+  </div>
+  <input type="hidden" name="current-page" id="current-page" value="1">
+  <input type="hidden" name="page-limit" id="page-limit" value="7">
+</div>

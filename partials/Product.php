@@ -74,7 +74,7 @@ class Product extends Database
 
 
   // get multiple rows
-  public function getMultipleRows($start = 0, $limit = 4) {
+  public function getMultipleRows($start = 0, $limit = 7) {
     $sql = "SELECT * FROM {$this->tableName} ORDER BY id DESC LIMIT {$start}, {$limit}";
     $statement = $this->connection->prepare($sql);
     $statement->execute();
@@ -144,7 +144,7 @@ class Product extends Database
   }
 
   // search product
-  public function searchRows($searchText, $start = 0, $limit = 4) {
+  public function searchRows($searchText, $start = 0, $limit = 7) {
     $sql = "SELECT * FROM {$this->tableName} WHERE name LIKE :search ORDER BY id DESC LIMIT {$start}, {$limit}";
     $statement = $this->connection->prepare($sql);
     $statement->execute([":search" => "%{$searchText}%"]);

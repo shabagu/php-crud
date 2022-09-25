@@ -48,6 +48,18 @@ $(document).ready(function() {
     getProducts()
   })
 
+  // onclick event for changing pagination limit
+  $(document).on("click", ".page-limit-button", function(event) {
+    event.preventDefault()
+    let limit = this.value
+    $("#dropdown-menu").html("Page limit: " + limit)
+    $("#page-limit").val(limit)
+    $("#current-page").val(1)
+    $("#search-input").val("")
+    $("#pagination").show() // todo: fix pagination with search
+    getProducts()
+  })
+
   // onclick event for getting product to update
   $(document).on("click", "a.product-update", function(event) {
     event.preventDefault()
@@ -160,7 +172,8 @@ $(document).ready(function() {
 
   // event for search
   $(document).on("keyup", "#search-input", function() {
-    const searchText = $(this).val()
+    let searchText = $(this).val()
+    let pageLimit = $("#page-limit").val()
     if (searchText.length > 0) {
       $.ajax({
         url: "/php-crud/ajax.php",
@@ -168,6 +181,7 @@ $(document).ready(function() {
         dataType: "json",
         data: {
           searchText: searchText,
+          limit: pageLimit,
           action: "search-products"
         },
         beforeSend: function() {
@@ -180,7 +194,7 @@ $(document).ready(function() {
               productRows += createProductRow(product)
             })
             $("#product-table tbody").html(productRows)
-            $("#product-pagination").hide()
+            $("#pagination").hide()
           }
         },
         error: function(request, error) {
@@ -190,7 +204,7 @@ $(document).ready(function() {
       })
     } else {
       getProducts();
-      $("#product-pagination").show()
+      $("#pagination").show()
     }
   })
 
@@ -206,13 +220,15 @@ $(document).ready(function() {
 // get products
 function getProducts() {
   let currentPageNumber = $("#current-page").val()
+  let pageLimit = $("#page-limit").val()
   $.ajax({
     url: "/php-crud/ajax.php",
     type: "get",
     dataType: "json",
     data: {
       page: currentPageNumber,
-      action: "get-all-products"
+      limit: pageLimit,
+      action: "get-multiple-products"
     },
     beforeSend: function() {
       console.log("Data is loading ...")
@@ -227,7 +243,7 @@ function getProducts() {
         })
         $("#product-table tbody").html(productRows)
         let productCount = response.count
-        let pageCount = Math.ceil(parseInt(productCount) / 4)
+        let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
         // let currentPageNumber = $("#current-page").val()
         // todo -->> ???? is previous line needed / zero rows bug fix (when deleting last row in page)
         pagination(pageCount, currentPageNumber)
@@ -316,7 +332,7 @@ function pagination(totalNumberOfPages, currentPageNumber) {
     `
     pageList += `</ul>`
   }
-  $("#product-pagination").html(pageList)
+  $("#pagination").html(pageList)
 }
 
 // create toast function
@@ -346,3 +362,5 @@ function createToast(message, action) {
     $(this).remove()
   })
 }
+
+// todo: comment all console logs

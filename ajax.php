@@ -49,9 +49,9 @@ if ($action == "submit-product-form" && !empty($_POST)) {
 }
 
 // get products action
-if ($action == "get-all-products") {
+if ($action == "get-multiple-products") {
   $page = (!empty($_GET["page"])) ? $_GET["page"] : 1;
-  $limit = 4;
+  $limit = (!empty($_GET["limit"])) ? $_GET["limit"]: 7;
   $start = ($page - 1) * $limit;
   $products = $product->getMultipleRows($start, $limit);
 
@@ -100,11 +100,11 @@ if ($action == "delete-product") {
 //search products action
 if ($action == "search-products") {
   $searchText = (!empty($_GET["searchText"])) ? trim($_GET["searchText"]) : "";
+  $start = 0;
+  $limit = (!empty($_GET["limit"])) ? $_GET["limit"]: 7;
 
-  $response = $product->searchRows($searchText);
+  $response = $product->searchRows($searchText, $start, $limit);
 
   echo json_encode($response);
   exit();
 }
-
-// todo: rename action names
