@@ -194,6 +194,10 @@ $(document).ready(function() {
     }
   })
 
+  // onclick event for closing toast
+  $(document).on("click", ".toast-box .toast-close", function() {
+    $(this).parents(".toast-box").remove()
+  })
 
 })
 
@@ -257,7 +261,7 @@ function createProductRow(product) {
             data-toggle="modal"
             data-target="#product-card-modal"
           >
-            <i class="fa-lg fa-solid fa-eye"></i>
+            <i class="fa-xl fa-solid fa-eye"></i>
           </a>
           <a
             href="#"
@@ -267,7 +271,7 @@ function createProductRow(product) {
             data-toggle="modal"
             data-target="#product-form-modal"
           >
-            <i class="fa-lg fa-solid fa-pen-to-square"></i>
+            <i class="fa-xl fa-solid fa-pen-to-square"></i>
           </a>
           <a
             href="#"
@@ -275,7 +279,7 @@ function createProductRow(product) {
             data-id="${product.id}"
             class="product-delete ml-3 text-danger"
           >
-            <i class="fa-lg fa-solid fa-trash-can"></i>
+            <i class="fa-xl fa-solid fa-trash-can"></i>
           </a>
         </td>
       </tr>
@@ -327,11 +331,14 @@ function createToast(message, action) {
       break
     default : iconName = "fa-question"
   }
-  let icon = `<i class="fa-lg fa-solid ${iconName} pr-2"></i>`
+  let icon = `<i class="fa-xl fa-solid ${iconName} pr-2"></i>`
   let toast = `
     <div class="toast-box bg-dark text-light">
-      <div class="mb-2">${icon}</div>
-      <div>${message}</div>
+      <div class="d-flex justify-content-between">
+        <div>${icon} <span class="h5">success</span></div>
+        <div><i class="toast-close fa-2xl fa-regular fa-circle-xmark"></i></div>
+      </div>
+      <div class="mt-3">${message}</div>
     </div>
   `
   $("#toast-container").append(toast)
