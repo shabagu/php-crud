@@ -26,6 +26,8 @@ $(document).ready(function() {
         if (response) {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
+          $("#product-image").next().css("color", "#6c757d")
+          $("#product-image").next().text("Image file (png, jpg or jpeg)")
           if (isNew){
             $("#current-page").val(1)
           }
@@ -38,6 +40,15 @@ $(document).ready(function() {
         console.log("Error: " + error)
       }
     })
+  })
+
+  // onchange event for displaying image name insted of a file input placeholder
+  $(document).on("change", "#product-image", function() {
+    let fileName = this.files[0].name
+    $(this).next().css("color", "#495057")
+    $(this).next().text(fileName)
+
+    // FIRST todo: complete file input  
   })
 
   // onclick event for pagination
@@ -56,7 +67,8 @@ $(document).ready(function() {
     $("#page-limit").val(limit)
     $("#current-page").val(1)
     $("#search-input").val("")
-    $("#pagination").show() // todo: fix pagination with search
+    $("#pagination").show()
+    // todo: fix pagination with search
     getProducts()
   })
 
@@ -84,6 +96,7 @@ $(document).ready(function() {
           $("#product-amount").val(response.amount)
           $("#product-purchase-price").val(response.purchase_price)
           $("#product-id").val(response.id)
+          console.log(response)
         }
       },
       error: function(request, error) {
@@ -96,6 +109,8 @@ $(document).ready(function() {
   // onclick event for reseting product form when adding new product
   $("#product-add-button").on("click", function() {
     $("#product-form")[0].reset()
+    $("#product-image").next().css("color", "#6c757d")
+    $("#product-image").next().text("Image file (png, jpg or jpeg)")
     $("#product-id").val("")
   })
 
@@ -240,7 +255,7 @@ function getProducts() {
       action: "get-multiple-products"
     },
     beforeSend: function() {
-      console.log("Data is loading ...")
+      // console.log("Data is loading ...")
     },
     success: function(response) {
       // console.log("Data successfully loaded!")
@@ -348,7 +363,7 @@ function pagination(totalNumberOfPages, currentPageNumber) {
         <a class="page-link" href="#" data-page="${totalNumberOfPages}">&gt;&gt;</a>
       </li>
     `
-
+    // todo: make pagination limit
     pageList += `</ul>`
   }
   $("#pagination").html(pageList)
@@ -381,3 +396,5 @@ function createToast(message, action) {
     $(this).remove()
   })
 }
+
+// todo: create no-image image (image-placeholder)
