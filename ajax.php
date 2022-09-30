@@ -17,6 +17,7 @@ if ($action == "submit-product-form" && !empty($_POST)) {
 
   $imageName="";
   if (!empty($image["name"])) {
+    $imageInitilName = $image["name"];
     $imageName = $product->uploadImage($image);
     $productData = [
       "name" => $name,
@@ -24,6 +25,7 @@ if ($action == "submit-product-form" && !empty($_POST)) {
       "amount" => $amount,
       "purchase_price" => $purchasePrice,
       "image" => $imageName,
+      "image_initial" => $imageInitilName,
     ];
   } else {
     $productData = [

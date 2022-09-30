@@ -96,7 +96,8 @@ $(document).ready(function() {
           $("#product-amount").val(response.amount)
           $("#product-purchase-price").val(response.purchase_price)
           $("#product-id").val(response.id)
-          console.log(response)
+          $("#product-image").next().text(response.image_initial)
+          $("#product-image").next().css("color", "#495057")
         }
       },
       error: function(request, error) {
@@ -398,3 +399,7 @@ function createToast(message, action) {
 }
 
 // todo: create no-image image (image-placeholder)
+
+// todo: set page limit in cookie
+
+// todo: set pagination width limits
