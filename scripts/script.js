@@ -47,8 +47,6 @@ $(document).ready(function() {
     let fileName = this.files[0].name
     $(this).next().css("color", "#495057")
     $(this).next().text(fileName)
-
-    // FIRST todo: complete file input  
   })
 
   // onclick event for pagination
@@ -234,8 +232,23 @@ $(document).ready(function() {
   })
 
   // onclick event for closing toast
-  $(document).on("click", ".toast-box .toast-close", function() {
+  $(document).on("click", ".toast-box .toast-close", function(event) {
+    event.preventDefault()
     $(this).parents(".toast-box").remove()
+  })
+
+  // onclick event for clearing image
+  $(document).on("click", "#product-image-clear", function(event) {
+    event.preventDefault()
+
+    // deleting file for new product
+    if ($("#product-id").val() == "") {
+      $("#product-image").val("")
+      $("#product-image").next().css("color", "#6c757d")
+      $("#product-image").next().text("Image file (png, jpg or jpeg)")
+    } else {
+      alert("Удаление картинки существующего продукта")
+    }
   })
 
 })

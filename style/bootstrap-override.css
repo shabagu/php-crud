@@ -36,6 +36,12 @@
 .custom-file-label {
     color: #6c757d;
 }
+.custom-file input:hover {
+    cursor: pointer;
+}
+#product-image-clear {
+    border: 1px solid #ced4da;
+}
 
 
 /* product table icon hover underline fix */
@@ -46,3 +52,4 @@
 #product-table tr td:last-child {
     user-select: none;
 }
+
