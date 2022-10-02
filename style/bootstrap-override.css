@@ -31,7 +31,7 @@
 .custom-file-label::after {
   color: white;
   background-color: #343a40;
-  content: "Upload" !important;
+  content: "Select" !important;
 }
 .custom-file-label {
     color: #6c757d;

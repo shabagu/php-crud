@@ -42,34 +42,6 @@ $(document).ready(function() {
     })
   })
 
-  // onchange event for displaying image name insted of a file input placeholder
-  $(document).on("change", "#product-image", function() {
-    let fileName = this.files[0].name
-    $(this).next().css("color", "#495057")
-    $(this).next().text(fileName)
-  })
-
-  // onclick event for pagination
-  $(document).on("click", "ul.pagination li a", function(event) {
-    event.preventDefault()
-    const targetPage = $(this).data("page")
-    $("#current-page").val(targetPage)
-    getProducts()
-  })
-
-  // onclick event for changing pagination limit
-  $(document).on("click", ".page-limit-button", function(event) {
-    event.preventDefault()
-    let limit = this.value
-    $("#dropdown-menu").html("Page limit: " + limit)
-    $("#page-limit").val(limit)
-    $("#current-page").val(1)
-    $("#search-input").val("")
-    $("#pagination").show()
-    // todo: fix pagination with search
-    getProducts()
-  })
-
   // onclick event for getting product to update
   $(document).on("click", "a.product-update", function(event) {
     event.preventDefault()
@@ -103,14 +75,6 @@ $(document).ready(function() {
         console.log("Error: " + error)
       }
     })
-  })
-
-  // onclick event for reseting product form when adding new product
-  $("#product-add-button").on("click", function() {
-    $("#product-form")[0].reset()
-    $("#product-image").next().css("color", "#6c757d")
-    $("#product-image").next().text("Image file (png, jpg or jpeg)")
-    $("#product-id").val("")
   })
 
   // onclick event for deleting
@@ -161,10 +125,16 @@ $(document).ready(function() {
       },
       success: function(response) {
         if (response) {
+          let imageSrc = ""
+          if (response.image) {
+            imageSrc = "uploads/" + response.image
+          } else {
+            imageSrc = "media/image-placeholder.png"
+          }
           const productCard = `
           <div class="row">
             <div class="col-sm-6 col-md-4">
-              <img src="uploads/${response.image}" alt="" class="rounded">
+              <img src="${imageSrc}" alt="" class="rounded">
             </div>
             <div class="col-sm-6 col-md-8">
               <h4 class="text-primary" title="Product name">${response.name}</h4>
@@ -237,6 +207,48 @@ $(document).ready(function() {
     $(this).parents(".toast-box").remove()
   })
 
+
+
+  // onclick event for reseting product form when adding new product
+  $("#product-add-button").on("click", function() {
+    $("#product-form")[0].reset()
+    $("#product-image").next().css("color", "#6c757d")
+    $("#product-image").next().text("Image file (png, jpg or jpeg)")
+    $("#product-image-clear").prop("disabled", true)
+    $("#product-id").val("")
+  })
+
+  // onclick event for pagination
+  $(document).on("click", "ul.pagination li a", function(event) {
+    event.preventDefault()
+    const targetPage = $(this).data("page")
+    $("#current-page").val(targetPage)
+    getProducts()
+  })
+
+  // onclick event for changing pagination limit
+  $(document).on("click", ".page-limit-button", function(event) {
+    event.preventDefault()
+    let limit = this.value
+    $("#dropdown-menu").html("Page limit: " + limit)
+    $("#page-limit").val(limit)
+    $("#current-page").val(1)
+    $("#search-input").val("")
+    $("#pagination").show()
+    // todo: fix pagination with search
+    getProducts()
+  })
+
+
+
+  // onchange event for displaying image name insted of a file input placeholder
+  $(document).on("change", "#product-image", function() {
+    let fileName = this.files[0].name
+    $(this).next().css("color", "#495057")
+    $(this).next().text(fileName)
+    $("#product-image-clear").prop("disabled", false)
+  })
+
   // onclick event for clearing image
   $(document).on("click", "#product-image-clear", function(event) {
     event.preventDefault()
@@ -246,7 +258,10 @@ $(document).ready(function() {
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
       $("#product-image").next().text("Image file (png, jpg or jpeg)")
+      $("#product-image-clear").prop("disabled", true)
     } else {
+
+      // deleting file for existing product 
       alert("Удаление картинки существующего продукта")
     }
   })
@@ -295,12 +310,20 @@ function getProducts() {
 
 // create product table row function
 function createProductRow(product) {
-  let productRow = ""
+  let imageSrc = ""
+  if (product.image) {
+    imageSrc = "uploads/" + product.image
+  } else {
+    imageSrc = "media/image-placeholder.png"
+  }
 
+  console.log(imageSrc)
+
+  let productRow = ""
   if (product) {
     productRow = `
       <tr>
-        <td scope="row"><img src=uploads/${product.image} alt=""></td>
+        <td scope="row"><img src="${imageSrc}" alt=""></td>
         <td>${product.name}</td>
         <td>${product.code}</td>
         <td>${product.amount}</td>
@@ -416,3 +439,7 @@ function createToast(message, action) {
 // todo: set page limit in cookie
 
 // todo: set pagination width limits
+
+// todo: deleting image files from uploads
+
+// todo: deleting image function
