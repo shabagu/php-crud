@@ -317,8 +317,6 @@ function createProductRow(product) {
     imageSrc = "media/image-placeholder.png"
   }
 
-  console.log(imageSrc)
-
   let productRow = ""
   if (product) {
     productRow = `

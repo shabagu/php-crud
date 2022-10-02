@@ -21,7 +21,7 @@
     border: solid 1px #343a40;
 }
 .pagination {
-    user-select: none;
+    user-select: none !important;
 }
 .pagination li.disabled a {
     color: #cbced1 !important;
@@ -40,7 +40,7 @@
     cursor: pointer;
 }
 #product-image-clear {
-    border: 1px solid #ced4da;
+    border: 1px solid #ced4daff !important;
 }
 
 
@@ -50,6 +50,5 @@
 }
 /* product table icon selectability fix */
 #product-table tr td:last-child {
-    user-select: none;
+    user-select: none !important;
 }
-
