@@ -16,6 +16,26 @@ img {
   height: 120px;
 }
 
+#product-table {
+  margin-bottom: 80px;
+}
+
+.custom-file-caption::before {
+  content: "*";
+}
+.custom-file-caption {
+  margin-left: 20px;
+  margin-top: 10px;
+  color: #ced4da;
+  transition: color 500ms ease-out;
+}
+.custom-file-caption:hover {
+  color: #343a40;
+  transition: color 500ms ease-out;
+}
+
+
+
 #toast-container {
   position: fixed;
   right: 0;
@@ -31,6 +51,7 @@ img {
   align-items: flex-end;
 
   pointer-events: none;
+  z-index: 100;
 }
 
 .toast-box {
@@ -47,6 +68,9 @@ img {
   pointer-events: all;
 }
 
+
+
+
 #pagination-menu {
   position: fixed;
   bottom: 0;
@@ -59,7 +83,7 @@ img {
   padding: 20px 12vw 20px 12vw;
   background-color: #343a40;
 
-  z-index: 100;
+  z-index: 3;
 }
 
 #pagination-pages-box {
@@ -69,6 +93,3 @@ img {
   right: 0;
 }
 
-#product-table {
-  margin-bottom: 80px;
-}

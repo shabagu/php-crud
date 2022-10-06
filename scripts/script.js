@@ -61,12 +61,18 @@ $(document).ready(function() {
         // console.log("Data successfully loaded!")
         // console.log(response)
         if (response) {
+          $("#product-id").val(response.id)
           $("#product-name").val(response.name)
           $("#product-code").val(response.code)
           $("#product-amount").val(response.amount)
           $("#product-purchase-price").val(response.purchase_price)
-          $("#product-id").val(response.id)
-          $("#product-image").next().text(response.image_initial)
+          if (response.image) {
+            $(".custom-file-label").attr("label-content", "Change")
+            $("#product-image").next().text(response.image_initial)
+          } else {
+            $(".custom-file-label").attr("label-content", "Select")
+            $("#product-image").next().text("NO IMAGE")
+          }
           $("#product-image").next().css("color", "#495057")
         }
       },
@@ -209,13 +215,15 @@ $(document).ready(function() {
 
 
 
-  // onclick event for reseting product form when adding new product
+
+  // product form RESET
   $("#product-add-button").on("click", function() {
     $("#product-form")[0].reset()
     $("#product-image").next().css("color", "#6c757d")
     $("#product-image").next().text("Image file (png, jpg or jpeg)")
     $("#product-image-clear").prop("disabled", true)
     $("#product-id").val("")
+    $(".custom-file-label").attr("label-content", "Select")
   })
 
   // onclick event for pagination
@@ -247,6 +255,7 @@ $(document).ready(function() {
     $(this).next().css("color", "#495057")
     $(this).next().text(fileName)
     $("#product-image-clear").prop("disabled", false)
+    $(".custom-file-label").attr("label-content", "Change")
   })
 
   // onclick event for clearing image
@@ -259,6 +268,7 @@ $(document).ready(function() {
       $("#product-image").next().css("color", "#6c757d")
       $("#product-image").next().text("Image file (png, jpg or jpeg)")
       $("#product-image-clear").prop("disabled", true)
+      $(".custom-file-label").attr("label-content", "Select")
     } else {
 
       // deleting file for existing product 
@@ -432,12 +442,13 @@ function createToast(message, action) {
   })
 }
 
-// todo: create no-image image (image-placeholder)
+// todo: set page limit in cookie (???)
 
-// todo: set page limit in cookie
+// todo: set pagination width limits (???)
 
-// todo: set pagination width limits
+// todo: deleting image files from uploads folder on server
 
-// todo: deleting image files from uploads
+// todo: deleting image function for existing products
 
-// todo: deleting image function
+// todo: table columns fixed width
+

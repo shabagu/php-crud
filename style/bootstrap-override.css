@@ -27,20 +27,18 @@
     color: #cbced1 !important;
 }
 
+
 /* file input changing */
 .custom-file-label::after {
   color: white;
   background-color: #343a40;
-  content: "Select" !important;
+  content: attr(label-content) !important;
 }
 .custom-file-label {
     color: #6c757d;
 }
 .custom-file input:hover {
-    cursor: pointer;
-}
-#product-image-clear {
-    border: 1px solid #ced4daff !important;
+    cursor: pointer !important;
 }
 
 
@@ -51,4 +49,14 @@
 /* product table icon selectability fix */
 #product-table tr td:last-child {
     user-select: none !important;
+}
+
+
+
+.form-group:last-child {
+    margin-bottom: 0 !important;
+}
+
+#product-image-clear {
+    border: 1px solid #ced4daff !important;
 }

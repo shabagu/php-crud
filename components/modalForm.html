@@ -120,12 +120,18 @@
                   id="product-image"
                   name="image"
                 >
-                <label class="custom-file-label" for="product-image">Image file (png, jpg or jpeg)</label>
+                <label class="custom-file-label" for="product-image" label-content="Select">
+                  Image file (png, jpg or jpeg)
+                </label>
               </div>
               <div class="input-group-append">
-                <!-- todo: clear image button -->
-                <button class="btn btn-warning" type="button" id="product-image-clear" disabled>Clear</button> 
+                <button class="btn btn-dark" type="button" id="product-image-clear">
+                  Clear
+                </button>
               </div>
+            </div>
+            <div class="custom-file-caption">
+              allowed file extensions: png, jpg, jpeg
             </div>
           </div>
           

@@ -4,7 +4,7 @@ class Database
   private $dbserver = "localhost";
   private $dbuser = "root";
   private $dbpassword = "";
-  private $dbname = "phpcrudproduct";
+  private $dbname = "phpcrud";
   protected $connection;
 
   public function __construct() {
