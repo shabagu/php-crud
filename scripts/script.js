@@ -1,10 +1,10 @@
-// after the document has been loaded
 $(document).ready(function() {
 
-  // calling getProducts()
+  // getting products right after the document has loaded
   getProducts()
   
-  // submitting product form
+  
+  // submitting product form (creating and updating)
   $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
     const isNew = $("#product-id").val().length > 0 ? false : true
@@ -27,7 +27,7 @@ $(document).ready(function() {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
           $("#product-image").next().css("color", "#6c757d")
-          $("#product-image").next().text("Image file (png, jpg or jpeg)")
+          $("#product-image").next().text("Image file")
           if (isNew){
             $("#current-page").val(1)
           }
@@ -42,7 +42,7 @@ $(document).ready(function() {
     })
   })
 
-  // onclick event for getting product to update
+  // getting product to update
   $(document).on("click", "a.product-update", function(event) {
     event.preventDefault()
     let productId = $(this).data("id")
@@ -66,14 +66,19 @@ $(document).ready(function() {
           $("#product-code").val(response.code)
           $("#product-amount").val(response.amount)
           $("#product-purchase-price").val(response.purchase_price)
-          if (response.image) {
-            $(".custom-file-label").attr("label-content", "Change")
-            $("#product-image").next().text(response.image_initial)
-          } else {
-            $(".custom-file-label").attr("label-content", "Select")
-            $("#product-image").next().text("NO IMAGE")
-          }
+          $("#product-image").val("")
           $("#product-image").next().css("color", "#495057")
+          if (response.image) {
+            $("#product-image").next().text(response.image_initial)
+            $("#product-image-clear").prop("disabled", false)
+            $("#product-image-clear").text("Delete")
+            $(".custom-file-label").attr("label-content", "Change")
+          } else {
+            $("#product-image").next().text("NO IMAGE")
+            $("#product-image-clear").prop("disabled", true)
+            $("#product-image-clear").text("Clear")
+            $(".custom-file-label").attr("label-content", "Select")
+          }
         }
       },
       error: function(request, error) {
@@ -83,38 +88,7 @@ $(document).ready(function() {
     })
   })
 
-  // onclick event for deleting
-  $(document).on("click", "a.product-delete", function(event) {
-    event.preventDefault()
-    let productId = $(this).data("id")
-    if (confirm(`Are you shure you want to delete this product?`)) {
-      $.ajax({
-        url: "/php-crud/ajax.php",
-        type: "get",
-        dataType: "json",
-        data: {
-          id: productId,
-          action: "delete-product"
-        },
-        beforeSend: function() {
-          // console.log("Performing delete request ...")
-        },
-        success: function(response) {
-          if (response.deleted) {
-            // console.log("Product successfully deleted!")
-            createToast("Product has been deleted successfully", "delete")
-            getProducts()
-          }
-        },
-        error: function(request, error) {
-          console.log(arguments)
-          console.log("Error: " + error)
-        }
-      })
-    }
-  })
-
-  // onclick event for viewing product card
+  // viewing product card
   $(document).on("click", "a.product-view", function(event) {
     event.preventDefault()
     let productId = $(this).data("id")
@@ -160,7 +134,41 @@ $(document).ready(function() {
     })
   })
 
-  // event for search
+  // deleting product
+  $(document).on("click", "a.product-delete", function(event) {
+    event.preventDefault()
+    let productId = $(this).data("id")
+    if (confirm(`Are you shure you want to delete this product?`)) {
+      $.ajax({
+        url: "/php-crud/ajax.php",
+        type: "get",
+        dataType: "json",
+        data: {
+          id: productId,
+          action: "delete-product"
+        },
+        beforeSend: function() {
+          // console.log("Performing delete request ...")
+        },
+        success: function(response) {
+          if (response.deleted) {
+            // console.log("Product successfully deleted!")
+            createToast("Product has been deleted successfully", "delete")
+            getProducts()
+          }
+        },
+        error: function(request, error) {
+          console.log(arguments)
+          console.log("Error: " + error)
+        }
+      })
+    }
+  })
+
+
+
+
+  // searching for products
   $(document).on("keyup", "#search-input", function() {
     let searchText = $(this).val()
     let pageLimit = $("#page-limit").val()
@@ -198,7 +206,7 @@ $(document).ready(function() {
     }
   })
 
-  // onclick event for clearing search input
+  // clearing search input
   $(document).on("click", "#search-clear", function(event) {
     event.preventDefault()
     $("#current-page").val(1)
@@ -207,7 +215,7 @@ $(document).ready(function() {
     getProducts()
   })
 
-  // onclick event for closing toast
+  // closing toast
   $(document).on("click", ".toast-box .toast-close", function(event) {
     event.preventDefault()
     $(this).parents(".toast-box").remove()
@@ -218,15 +226,16 @@ $(document).ready(function() {
 
   // product form RESET
   $("#product-add-button").on("click", function() {
+    $("#product-id").val("")
     $("#product-form")[0].reset()
     $("#product-image").next().css("color", "#6c757d")
-    $("#product-image").next().text("Image file (png, jpg or jpeg)")
+    $("#product-image").next().text("Image file")
     $("#product-image-clear").prop("disabled", true)
-    $("#product-id").val("")
+    $("#product-image-clear").text("Clear")
     $(".custom-file-label").attr("label-content", "Select")
   })
 
-  // onclick event for pagination
+  // pagination jump
   $(document).on("click", "ul.pagination li a", function(event) {
     event.preventDefault()
     const targetPage = $(this).data("page")
@@ -234,7 +243,7 @@ $(document).ready(function() {
     getProducts()
   })
 
-  // onclick event for changing pagination limit
+  // changing pagination limit
   $(document).on("click", ".page-limit-button", function(event) {
     event.preventDefault()
     let limit = this.value
@@ -249,7 +258,8 @@ $(document).ready(function() {
 
 
 
-  // onchange event for displaying image name insted of a file input placeholder
+
+  // showing image name in file input
   $(document).on("change", "#product-image", function() {
     let fileName = this.files[0].name
     $(this).next().css("color", "#495057")
@@ -258,20 +268,21 @@ $(document).ready(function() {
     $(".custom-file-label").attr("label-content", "Change")
   })
 
-  // onclick event for clearing image
+  // clearing and deleting image
   $(document).on("click", "#product-image-clear", function(event) {
     event.preventDefault()
 
-    // deleting file for new product
-    if ($("#product-id").val() == "") {
+    // clearing file input (when adding new product)
+    if ($("#product-id").val() == "" || $("#product-image").val() != "") {
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
-      $("#product-image").next().text("Image file (png, jpg or jpeg)")
+      $("#product-image").next().text("Image file")
       $("#product-image-clear").prop("disabled", true)
       $(".custom-file-label").attr("label-content", "Select")
+
     } else {
 
-      // deleting file for existing product 
+      // deleting file (from db)
       alert("Удаление картинки существующего продукта")
     }
   })
@@ -442,13 +453,12 @@ function createToast(message, action) {
   })
 }
 
+// todo: deleting image function for existing products
+// todo: deleting image files from uploads folder on server
+
 // todo: set page limit in cookie (???)
 
 // todo: set pagination width limits (???)
-
-// todo: deleting image files from uploads folder on server
-
-// todo: deleting image function for existing products
 
 // todo: table columns fixed width
 
