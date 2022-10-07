@@ -1,10 +1,13 @@
 $(document).ready(function() {
 
-  // getting products right after the document has loaded
+  // calling get products function right after the document has loaded
   getProducts()
+
+
+
+  /* basic functions */
   
-  
-  // submitting product form (creating and updating)
+  // submitting product form (creating/updating)
   $(document).on("submit", "#product-form", function(event) {
     event.preventDefault()
     const isNew = $("#product-id").val().length > 0 ? false : true
@@ -165,9 +168,6 @@ $(document).ready(function() {
     }
   })
 
-
-
-
   // searching for products
   $(document).on("keyup", "#search-input", function() {
     let searchText = $(this).val()
@@ -206,25 +206,9 @@ $(document).ready(function() {
     }
   })
 
-  // clearing search input
-  $(document).on("click", "#search-clear", function(event) {
-    event.preventDefault()
-    $("#current-page").val(1)
-    $("#search-input").val("")
-    $("#pagination").show()
-    getProducts()
-  })
-
-  // closing toast
-  $(document).on("click", ".toast-box .toast-close", function(event) {
-    event.preventDefault()
-    $(this).parents(".toast-box").remove()
-  })
 
 
-
-
-
+  /* pagination functions */
 
   // pagination jump
   $(document).on("click", "ul.pagination li a", function(event) {
@@ -249,6 +233,7 @@ $(document).ready(function() {
 
 
 
+  /* image functions */
 
   // showing image name in file input
   $(document).on("change", "#product-image", function() {
@@ -259,17 +244,17 @@ $(document).ready(function() {
     $(".custom-file-label").attr("label-content", "Change")
   })
 
-  // clearing and deleting image
+  // deleting/clearing image
   $(document).on("click", "#product-image-clear", function(event) {
     event.preventDefault()
 
     if ($("#product-id").val() == "" || $("#product-image").val() != "") {
       // clearing file input (when adding new product)
-
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
       $("#product-image").next().text("Image file")
       $("#product-image-clear").prop("disabled", true)
+      // $("#product-image-clear").text("Clear")
       $(".custom-file-label").attr("label-content", "Select")
 
     } else {
@@ -286,8 +271,13 @@ $(document).ready(function() {
         beforeSend: function() {},
         success: function(response) {
           if (response) {
-            $("#product-form-modal").modal("hide")
             getProducts()
+            $("#product-image").val("")
+            $("#product-image").next().css("color", "#6c757d")
+            $("#product-image").next().text("Image file")
+            $("#product-image-clear").prop("disabled", true)
+            $("#product-image-clear").text("Clear")
+            $(".custom-file-label").attr("label-content", "Select")
           }
         },
         error: function (request, error) {
@@ -298,7 +288,11 @@ $(document).ready(function() {
     }
   })
 
-  // product form RESET
+
+
+  /* auxiliary functions */
+
+  // product form reset
   $("#product-add-button").on("click", function() {
     $("#product-id").val("")
     $("#product-form")[0].reset()
@@ -309,12 +303,26 @@ $(document).ready(function() {
     $(".custom-file-label").attr("label-content", "Select")
   })
 
+  // clearing search input
+  $(document).on("click", "#search-clear", function(event) {
+    event.preventDefault()
+    $("#current-page").val(1)
+    $("#search-input").val("")
+    $("#pagination").show()
+    getProducts()
+  })
+
+  // closing toast
+  $(document).on("click", ".toast-box .toast-close", function(event) {
+    event.preventDefault()
+    $(this).parents(".toast-box").remove()
+  })
+
 })
 
 
 
-
-// get products
+// get products function
 function getProducts() {
   let currentPageNumber = $("#current-page").val()
   let pageLimit = $("#page-limit").val()
@@ -351,6 +359,10 @@ function getProducts() {
     }
   })
 }
+
+
+
+/* html-creating functions */
 
 // create product table row function
 function createProductRow(product) {
@@ -471,7 +483,7 @@ function createToast(message, action) {
     </div>
   `
   $("#toast-container").append(toast)
-  $(".toast-box").last().fadeIn().delay(2000).fadeOut(1000, function() {
+  $(".toast-box").last().hide().fadeIn(200).delay(1000).fadeOut(400, function() {
     $(this).remove()
   })
 }
@@ -485,10 +497,11 @@ function createToast(message, action) {
 
 
 
-// todo: deleting image function for existing products
-// todo: deleting image file from uploads folder on server
-// todo: deleting old image file when adding new one 
-
+// +     deleting image function for existing products
+// +     deleting image file from uploads folder on server
+// todo: behaviour when deleting image
+// todo: deleting old image file when adding new one
+// todo: behaviour when changing image to existing product (clear/delete button changing) -> onchange delete should become clear, onclear all should return to initial condition
 
 // todo: set page limit in cookie (?)
 // todo: set pagination width limits (?)

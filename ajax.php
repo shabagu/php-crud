@@ -119,7 +119,8 @@ if ($action == "delete-product-image") {
     $isFileDeleted = $product->deleteImageFile($productId);
     $isFieldsDeleted = $product->deleteImageFields($productId);
     
-    $response = "";
+    $response = ["file" => $isFileDeleted, "fields" => $isFieldsDeleted];
+    
     echo json_encode($response);
     exit();
   }
