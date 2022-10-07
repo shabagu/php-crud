@@ -274,7 +274,7 @@ $(document).ready(function() {
             getProducts()
             $("#product-image").val("")
             $("#product-image").next().css("color", "#6c757d")
-            $("#product-image").next().text("Image file")
+            $("#product-image").next().text("NO IMAGE")
             $("#product-image-clear").prop("disabled", true)
             $("#product-image-clear").text("Clear")
             $(".custom-file-label").attr("label-content", "Select")

@@ -20,18 +20,20 @@ img {
   margin-bottom: 80px;
 }
 
-.custom-file-caption::before {
-  content: "*";
-}
 .custom-file-caption {
-  margin-left: 20px;
+  margin-left: 10px;
   margin-top: 10px;
   color: #ced4da;
   transition: color 500ms ease-out;
 }
+
 .custom-file-caption:hover {
   color: #343a40;
   transition: color 500ms ease-out;
+}
+
+.custom-file-caption i {
+  margin-right: 16px;
 }
 
 
