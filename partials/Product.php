@@ -4,6 +4,7 @@ class Product extends Database
 {
   protected $tableName = "product";
 
+
   // add row
   public function addRow($data) {
 
@@ -115,6 +116,7 @@ class Product extends Database
     }
     $sql = "UPDATE {$this->tableName} SET {$fields} WHERE id = :id";
     $statement = $this->connection->prepare($sql);
+
     try {
       $this->connection->beginTransaction();
       $data["id"] = $id;
@@ -132,16 +134,19 @@ class Product extends Database
   public function deleteRow($id) {
     $sql = "DELETE FROM {$this->tableName} WHERE id = :id";
     $statement = $this->connection->prepare($sql);
+
     try {
       $statement->execute([":id" => $id]);
       if ($statement->rowCount() > 0) {
         return true;
       }
+
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
       return false;
     }
   }
+
 
   // search product
   public function searchRows($searchText, $start = 0, $limit = 7) {
@@ -157,5 +162,48 @@ class Product extends Database
     return $result;
   }
 
+
+  // delete image file
+  public function deleteImageFile($id) {
+    $sql = "SELECT DISTINCT image FROM {$this->tableName} WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute(["id" => $id]);
+
+    if ($statement->rowCount() > 0) {
+      $fetched = $statement->fetch(PDO::FETCH_ASSOC);
+    } else {
+      $fetched = [];
+    }
+    $imageName = $fetched["image"];
+
+    if ($imageName != []) {
+      $filePath = getcwd() . "/uploads/" . $imageName;
+
+      if (unlink($filePath)) {
+        $result = true;
+      } else {
+        $result = false;
+      }
+    }    
+    return $result;
+  }
+
+
+  // delete image fields
+  public function deleteImageFields($id) {
+    $sql = "UPDATE {$this->tableName} SET image = '', image_initial = '' WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute(["id" => $id]);
+    
+    try {
+      $this->connection->beginTransaction();
+      $statement->execute(["id" => $id]);
+      $this->connection->commit();
+      
+    } catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+      $this->connection->rollBack();
+    }
+  }
 
 }

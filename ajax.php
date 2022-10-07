@@ -110,3 +110,17 @@ if ($action == "search-products") {
   echo json_encode($response);
   exit();
 }
+
+// delete image action
+if ($action == "delete-product-image") {
+  $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
+  
+  if (!empty($productId)) {
+    $isFileDeleted = $product->deleteImageFile($productId);
+    $isFieldsDeleted = $product->deleteImageFields($productId);
+    
+    $response = "";
+    echo json_encode($response);
+    exit();
+  }
+}

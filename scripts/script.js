@@ -224,16 +224,7 @@ $(document).ready(function() {
 
 
 
-  // product form RESET
-  $("#product-add-button").on("click", function() {
-    $("#product-id").val("")
-    $("#product-form")[0].reset()
-    $("#product-image").next().css("color", "#6c757d")
-    $("#product-image").next().text("Image file")
-    $("#product-image-clear").prop("disabled", true)
-    $("#product-image-clear").text("Clear")
-    $(".custom-file-label").attr("label-content", "Select")
-  })
+
 
   // pagination jump
   $(document).on("click", "ul.pagination li a", function(event) {
@@ -272,8 +263,9 @@ $(document).ready(function() {
   $(document).on("click", "#product-image-clear", function(event) {
     event.preventDefault()
 
-    // clearing file input (when adding new product)
     if ($("#product-id").val() == "" || $("#product-image").val() != "") {
+      // clearing file input (when adding new product)
+
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
       $("#product-image").next().text("Image file")
@@ -281,13 +273,44 @@ $(document).ready(function() {
       $(".custom-file-label").attr("label-content", "Select")
 
     } else {
-
-      // deleting file (from db)
-      alert("Удаление картинки существующего продукта")
+      // completely deleting image file
+      let productId = $("#product-id").val()
+      $.ajax({
+        url: "/php-crud/ajax.php",
+        type: "get",
+        dataType: "json",
+        data: {
+          id: productId,
+          action: "delete-product-image"
+        },
+        beforeSend: function() {},
+        success: function(response) {
+          if (response) {
+            $("#product-form-modal").modal("hide")
+            getProducts()
+          }
+        },
+        error: function (request, error) {
+          console.log(arguments)
+          console.log("Error: " + error)
+        }
+      })
     }
   })
 
+  // product form RESET
+  $("#product-add-button").on("click", function() {
+    $("#product-id").val("")
+    $("#product-form")[0].reset()
+    $("#product-image").next().css("color", "#6c757d")
+    $("#product-image").next().text("Image file")
+    $("#product-image-clear").prop("disabled", true)
+    $("#product-image-clear").text("Clear")
+    $(".custom-file-label").attr("label-content", "Select")
+  })
+
 })
+
 
 
 
@@ -453,12 +476,21 @@ function createToast(message, action) {
   })
 }
 
+
+
+
+
+
+
+
+
+
 // todo: deleting image function for existing products
-// todo: deleting image files from uploads folder on server
+// todo: deleting image file from uploads folder on server
+// todo: deleting old image file when adding new one 
 
-// todo: set page limit in cookie (???)
 
-// todo: set pagination width limits (???)
+// todo: set page limit in cookie (?)
+// todo: set pagination width limits (?)
 
-// todo: table columns fixed width
-
+// todo: table columns fixed width (?)
