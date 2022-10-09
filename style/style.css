@@ -25,6 +25,7 @@ img {
   margin-top: 10px;
   color: #ced4da;
   transition: color 500ms ease-out;
+  cursor: default;
 }
 
 .custom-file-caption:hover {

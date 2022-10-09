@@ -5,6 +5,7 @@ $(document).ready(function() {
 
 
 
+
   /* basic functions */
   
   // submitting product form (creating/updating)
@@ -76,8 +77,17 @@ $(document).ready(function() {
             $("#product-image-clear").prop("disabled", false)
             $("#product-image-clear").text("Delete")
             $(".custom-file-label").attr("label-content", "Change")
+            // checking image file existence
+            $.ajax({
+              url: `/php-crud/uploads/${response.image}`,
+              type: "head",
+              error: function() {
+                $("#product-image").next().css("color", "#ff0000")
+                $("#product-image").next().text("(image file is missing)") 
+              }
+            })
           } else {
-            $("#product-image").next().text("NO IMAGE")
+            $("#product-image").next().text("(no image)")
             $("#product-image-clear").prop("disabled", true)
             $("#product-image-clear").text("Clear")
             $(".custom-file-label").attr("label-content", "Select")
@@ -117,7 +127,7 @@ $(document).ready(function() {
           const productCard = `
           <div class="row">
             <div class="col-sm-6 col-md-4">
-              <img src="${imageSrc}" alt="" class="rounded">
+              <img src="${imageSrc}" alt="" class="rounded" onerror="imgError(this)">
             </div>
             <div class="col-sm-6 col-md-8">
               <h4 class="text-primary" title="Product name">${response.name}</h4>
@@ -208,6 +218,7 @@ $(document).ready(function() {
 
 
 
+
   /* pagination functions */
 
   // pagination jump
@@ -234,6 +245,7 @@ $(document).ready(function() {
 
 
 
+
   /* image functions */
 
   // showing image name in file input
@@ -250,7 +262,7 @@ $(document).ready(function() {
     event.preventDefault()
 
     if ($("#product-id").val() == "" || $("#product-image").val() != "") {
-      
+
       // clearing file input (when adding new product)
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
@@ -277,7 +289,7 @@ $(document).ready(function() {
             getProducts()
             $("#product-image").val("")
             $("#product-image").next().css("color", "#6c757d")
-            $("#product-image").next().text("NO IMAGE")
+            $("#product-image").next().text("(no image)")
             $("#product-image-clear").prop("disabled", true)
             $("#product-image-clear").text("Clear")
             $(".custom-file-label").attr("label-content", "Select")
@@ -291,12 +303,15 @@ $(document).ready(function() {
     }
   })
 
+  
+
+
 
 
   /* auxiliary functions */
 
   // product form reset
-  $("#product-add-button").on("click", function() {
+  $(document).on("click", "#product-add-button", function() {
     $("#product-id").val("")
     $("#product-form")[0].reset()
     $("#product-image").next().css("color", "#6c757d")
@@ -321,7 +336,11 @@ $(document).ready(function() {
     $(this).parents(".toast-box").remove()
   })
 
+
+
+
 })
+
 
 
 
@@ -365,6 +384,7 @@ function getProducts() {
 
 
 
+
 /* html-creating functions */
 
 // create product table row function
@@ -380,7 +400,9 @@ function createProductRow(product) {
   if (product) {
     productRow = `
       <tr>
-        <td scope="row"><img src="${imageSrc}" alt=""></td>
+        <td scope="row">
+          <img src="${imageSrc}" alt="" onerror="imgError(this)">
+        </td>
         <td>${product.name}</td>
         <td>${product.code}</td>
         <td>${product.amount}</td>
@@ -491,8 +513,12 @@ function createToast(message, action) {
   })
 }
 
-
-
+// covering broken images function
+// (images are considered broken if the image file is missing the on server, but database contains image informaition)
+function imgError(element) {
+  $(element).attr("src", "media/image-broken.png")
+  $(element).addClass("broken")
+}
 
 
 
@@ -502,9 +528,11 @@ function createToast(message, action) {
 
 // + deleting image function for existing products
 // + deleting image file from uploads folder on server
-
 // + behaviour when deleting image
 // + deleting old image file when adding new one
+
+
+
 // todo: confirm dialog when deleting image
 // todo: deleting image file when deleting product
 // todo: behaviour when changing image to existing product (clear/delete button changing) -> onchange delete should become clear, onclear all should return to initial condition
@@ -519,3 +547,9 @@ function createToast(message, action) {
 // todo: table columns fixed width (?)
 
 // todo: fix pagination with search (?)
+
+
+
+
+
+
