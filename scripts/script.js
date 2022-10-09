@@ -453,7 +453,7 @@ function createProductRow(product) {
         <td>${product.code}</td>
         <td>${product.amount}</td>
         <td>${product.purchase_price} G</td>
-        <td>
+        <td class="operations">
           <a
             href="#"
             title="View product card"

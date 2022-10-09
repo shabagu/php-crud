@@ -96,3 +96,6 @@ img {
   right: 0;
 }
 
+#product-table td {
+  vertical-align: middle !important;
+}
