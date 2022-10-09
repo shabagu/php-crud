@@ -58,12 +58,8 @@ $(document).ready(function() {
         id: productId,
         action: "get-single-product"
       },
-      beforeSend: function() {
-        // console.log("Data is loading ...")
-      },
+      beforeSend: function() {},
       success: function(response) {
-        // console.log("Data successfully loaded!")
-        // console.log(response)
         if (response) {
           $("#product-id").val(response.id)
           $("#product-name").val(response.name)
@@ -72,21 +68,33 @@ $(document).ready(function() {
           $("#product-purchase-price").val(response.purchase_price)
           $("#product-image").val("")
           $("#product-image").next().css("color", "#495057")
+
           if (response.image) {
+            // presenting image option
+            $("#product-image").attr("image-type", "normal")
+            $("#product-image").attr("image-name", response.image_initial)
             $("#product-image").next().text(response.image_initial)
             $("#product-image-clear").prop("disabled", false)
             $("#product-image-clear").text("Delete")
             $(".custom-file-label").attr("label-content", "Change")
+
             // checking image file existence
             $.ajax({
               url: `/php-crud/uploads/${response.image}`,
               type: "head",
               error: function() {
-                $("#product-image").next().css("color", "#ff0000")
+                // broken image option
+                $("#product-image").attr("image-type", "broken")
+                $("#product-image").attr("image-name", "(image file is missing)")
                 $("#product-image").next().text("(image file is missing)") 
+                $("#product-image").next().css("color", "#ff0000")
               }
             })
+
           } else {
+            // no image option
+            $("#product-image").attr("image-type", "no-image")
+            $("#product-image").attr("image-name", "(no image)")
             $("#product-image").next().text("(no image)")
             $("#product-image-clear").prop("disabled", true)
             $("#product-image-clear").text("Clear")
@@ -127,7 +135,7 @@ $(document).ready(function() {
           const productCard = `
           <div class="row">
             <div class="col-sm-6 col-md-4">
-              <img src="${imageSrc}" alt="" class="rounded" onerror="imgError(this)">
+              <img src="${imageSrc}" alt="" class="rounded" onerror="imageMissing(this)">
             </div>
             <div class="col-sm-6 col-md-8">
               <h4 class="text-primary" title="Product name">${response.name}</h4>
@@ -254,6 +262,7 @@ $(document).ready(function() {
     $(this).next().css("color", "#495057")
     $(this).next().text(fileName)
     $("#product-image-clear").prop("disabled", false)
+    $("#product-image-clear").text("Clear")
     $(".custom-file-label").attr("label-content", "Change")
   })
 
@@ -261,20 +270,53 @@ $(document).ready(function() {
   $(document).on("click", "#product-image-clear", function(event) {
     event.preventDefault()
 
-    if ($("#product-id").val() == "" || $("#product-image").val() != "") {
+    let imageType = $("#product-image").attr("image-type")
+    let imageName = $("#product-image").attr("image-name")
+
+    if ($("#product-id").val() == "") {
 
       // clearing file input (when adding new product)
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
       $("#product-image").next().text("Image file")
       $("#product-image-clear").prop("disabled", true)
-      // $("#product-image-clear").text("Clear")
       $(".custom-file-label").attr("label-content", "Select")
+      
+    } else if ($("#product-image").val() != "") {
+
+      // clearing file input (when changing existing product)
+      $("#product-image").val("")
+      $("#product-image").next().text(imageName)
+      switch (imageType) {
+
+        // presenting image option
+        case "normal":
+          $("#product-image-clear").text("Delete")
+          setTimeout(() => {
+            $("#product-image-clear").blur()
+          }, 100)
+          break;
+
+        // broken image option
+        case "broken":
+          $("#product-image-clear").text("Delete")
+          setTimeout(() => {
+            $("#product-image-clear").blur()
+          }, 100)
+          $("#product-image").next().css("color", "#ff0000")
+          break;
+
+        // no image option
+        case "no-image":
+          $("#product-image-clear").prop("disabled", true)
+          $(".custom-file-label").attr("label-content", "Select")
+        break;
+      }
 
     } else {
 
       // completely deleting image file
-      if (confirm(`Are you shure you want to delete this product image?`)) {
+      if (confirm("Are you shure you want to delete this product image?")) {
         let productId = $("#product-id").val()
         $.ajax({
           url: "/php-crud/ajax.php",
@@ -289,7 +331,6 @@ $(document).ready(function() {
             if (response) {
               getProducts()
               $("#product-image").val("")
-              $("#product-image").next().css("color", "#6c757d")
               $("#product-image").next().text("(no image)")
               $("#product-image-clear").prop("disabled", true)
               $("#product-image-clear").text("Clear")
@@ -329,6 +370,9 @@ $(document).ready(function() {
     $("#current-page").val(1)
     $("#search-input").val("")
     $("#pagination").show()
+    setTimeout(() => {
+      this.blur()
+    }, 100)
     getProducts()
   })
 
@@ -403,7 +447,7 @@ function createProductRow(product) {
     productRow = `
       <tr>
         <td scope="row">
-          <img src="${imageSrc}" alt="" onerror="imgError(this)">
+          <img src="${imageSrc}" alt="" onerror="imageMissing(this)">
         </td>
         <td>${product.name}</td>
         <td>${product.code}</td>
@@ -517,27 +561,9 @@ function createToast(message, action) {
 
 // covering broken images function
 // (images are considered broken if the image file is missing the on server, but database contains image informaition)
-function imgError(element) {
+function imageMissing(element) {
   $(element).attr("src", "media/image-broken.png")
-  $(element).addClass("broken")
 }
-
-
-
-
-
-
-
-// + deleting image function for existing products
-// + deleting image file from uploads folder on server
-// + behaviour when deleting image
-// + deleting old image file when adding new one
-// + confirm dialog when deleting image
-// + deleting image file when deleting product
-
-
-
-// todo: behaviour when changing image to existing product (clear/delete button changing) -> onchange delete should become clear, onclear all should return to initial condition
 
 
 
@@ -549,9 +575,3 @@ function imgError(element) {
 // todo: table columns fixed width (?)
 
 // todo: fix pagination with search (?)
-
-
-
-
-
-
