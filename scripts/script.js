@@ -159,7 +159,7 @@ $(document).ready(function() {
   $(document).on("click", "a.product-delete", function(event) {
     event.preventDefault()
     let productId = $(this).data("id")
-    if (confirm(`Are you shure you want to delete this product?`)) {
+    if (confirm("Are you shure you want to delete this product?")) {
       $.ajax({
         url: "/php-crud/ajax.php",
         type: "get",
@@ -176,6 +176,11 @@ $(document).ready(function() {
             // console.log("Product successfully deleted!")
             createToast("Product has been deleted successfully", "delete")
             getProducts()
+            // empty table bug fix
+            if ($.trim($("#product-table tbdoy").html()) == "") {
+              $("#current-page").val($("#current-page").val() - 1)
+              getProducts()
+            }
           }
         },
         error: function(request, error) {
@@ -242,7 +247,7 @@ $(document).ready(function() {
   $(document).on("click", ".page-limit-button", function(event) {
     event.preventDefault()
     let limit = this.value
-    $("#dropdown-menu").html("Page limit: " + limit)
+    $("#dropdown-menu").html("Page limit: " + limit + " ")
     $("#page-limit").val(limit)
     $("#current-page").val(1)
     $("#search-input").val("")
@@ -417,7 +422,6 @@ function getProducts() {
         $("#product-table tbody").html(productRows)
         let productCount = response.count
         let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
-        // todo: zero rows bug fix (when deleting last row in page)
         pagination(pageCount, currentPageNumber)
       }
     },
@@ -566,12 +570,7 @@ function imageMissing(element) {
 }
 
 
-
-
-// todo: set page limit in cookie (?)
-
 // todo: set pagination width limits (?)
 
-// todo: table columns fixed width (?)
-
+// todo: set page limit in cookie (?)
 // todo: fix pagination with search (?)
