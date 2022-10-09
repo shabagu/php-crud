@@ -215,6 +215,7 @@ $(document).ready(function() {
     event.preventDefault()
     const targetPage = $(this).data("page")
     $("#current-page").val(targetPage)
+
     getProducts()
   })
 
@@ -227,7 +228,7 @@ $(document).ready(function() {
     $("#current-page").val(1)
     $("#search-input").val("")
     $("#pagination").show()
-    // todo: fix pagination with search
+
     getProducts()
   })
 
@@ -249,6 +250,7 @@ $(document).ready(function() {
     event.preventDefault()
 
     if ($("#product-id").val() == "" || $("#product-image").val() != "") {
+      
       // clearing file input (when adding new product)
       $("#product-image").val("")
       $("#product-image").next().css("color", "#6c757d")
@@ -258,6 +260,7 @@ $(document).ready(function() {
       $(".custom-file-label").attr("label-content", "Select")
 
     } else {
+
       // completely deleting image file
       let productId = $("#product-id").val()
       $.ajax({
@@ -497,13 +500,22 @@ function createToast(message, action) {
 
 
 
-// +     deleting image function for existing products
-// +     deleting image file from uploads folder on server
-// todo: behaviour when deleting image
-// todo: deleting old image file when adding new one
+// + deleting image function for existing products
+// + deleting image file from uploads folder on server
+
+// + behaviour when deleting image
+// + deleting old image file when adding new one
+// todo: confirm dialog when deleting image
+// todo: deleting image file when deleting product
 // todo: behaviour when changing image to existing product (clear/delete button changing) -> onchange delete should become clear, onclear all should return to initial condition
 
+
+
+
 // todo: set page limit in cookie (?)
+
 // todo: set pagination width limits (?)
 
 // todo: table columns fixed width (?)
+
+// todo: fix pagination with search (?)

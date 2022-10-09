@@ -176,7 +176,7 @@ class Product extends Database
     }
     $imageName = $fetched["image"];
 
-    if ($imageName != []) {
+    if ($imageName != "") {
       $filePath = getcwd() . "/uploads/" . $imageName;
 
       if (unlink($filePath)) {
@@ -184,7 +184,9 @@ class Product extends Database
       } else {
         $result = false;
       }
-    }    
+    } else {
+      $result = false;
+    }
     return $result;
   }
 
@@ -199,10 +201,12 @@ class Product extends Database
       $this->connection->beginTransaction();
       $statement->execute(["id" => $id]);
       $this->connection->commit();
+      return true;
       
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
       $this->connection->rollBack();
+      return false;
     }
   }
 

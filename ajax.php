@@ -27,6 +27,7 @@ if ($action == "submit-product-form" && !empty($_POST)) {
       "image" => $imageName,
       "image_initial" => $imageInitilName,
     ];
+    $product->deleteImageFile($productId); // deleting old image file
   } else {
     $productData = [
       "name" => $name,
