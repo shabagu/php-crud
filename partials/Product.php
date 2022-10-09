@@ -179,11 +179,13 @@ class Product extends Database
     if ($imageName != "") {
       $filePath = getcwd() . "/uploads/" . $imageName;
 
-      if (unlink($filePath)) {
+      if (file_exists($filePath)) {
+        unlink($filePath);
         $result = true;
       } else {
         $result = false;
       }
+      
     } else {
       $result = false;
     }
