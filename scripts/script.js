@@ -274,32 +274,34 @@ $(document).ready(function() {
     } else {
 
       // completely deleting image file
-      let productId = $("#product-id").val()
-      $.ajax({
-        url: "/php-crud/ajax.php",
-        type: "get",
-        dataType: "json",
-        data: {
-          id: productId,
-          action: "delete-product-image"
-        },
-        beforeSend: function() {},
-        success: function(response) {
-          if (response) {
-            getProducts()
-            $("#product-image").val("")
-            $("#product-image").next().css("color", "#6c757d")
-            $("#product-image").next().text("(no image)")
-            $("#product-image-clear").prop("disabled", true)
-            $("#product-image-clear").text("Clear")
-            $(".custom-file-label").attr("label-content", "Select")
+      if (confirm(`Are you shure you want to delete this product image?`)) {
+        let productId = $("#product-id").val()
+        $.ajax({
+          url: "/php-crud/ajax.php",
+          type: "get",
+          dataType: "json",
+          data: {
+            id: productId,
+            action: "delete-product-image"
+          },
+          beforeSend: function() {},
+          success: function(response) {
+            if (response) {
+              getProducts()
+              $("#product-image").val("")
+              $("#product-image").next().css("color", "#6c757d")
+              $("#product-image").next().text("(no image)")
+              $("#product-image-clear").prop("disabled", true)
+              $("#product-image-clear").text("Clear")
+              $(".custom-file-label").attr("label-content", "Select")
+            }
+          },
+          error: function (request, error) {
+            console.log(arguments)
+            console.log("Error: " + error)
           }
-        },
-        error: function (request, error) {
-          console.log(arguments)
-          console.log("Error: " + error)
-        }
-      })
+        })
+      }
     }
   })
 
@@ -530,11 +532,11 @@ function imgError(element) {
 // + deleting image file from uploads folder on server
 // + behaviour when deleting image
 // + deleting old image file when adding new one
+// + confirm dialog when deleting image
+// + deleting image file when deleting product
 
 
 
-// todo: confirm dialog when deleting image
-// todo: deleting image file when deleting product
 // todo: behaviour when changing image to existing product (clear/delete button changing) -> onchange delete should become clear, onclear all should return to initial condition
 
 

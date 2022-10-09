@@ -27,7 +27,9 @@ if ($action == "submit-product-form" && !empty($_POST)) {
       "image" => $imageName,
       "image_initial" => $imageInitilName,
     ];
-    $product->deleteImageFile($productId); // deleting old image file
+    if ($productId) {
+      $product->deleteImageFile($productId); // deleting old image file
+    }
   } else {
     $productData = [
       "name" => $name,
@@ -88,6 +90,7 @@ if ($action == "delete-product") {
   $productId = (!empty($_GET["id"])) ? $_GET["id"] : "";
 
   if (!empty($productId)) {
+    $product->deleteImageFile($productId);
     $isDeleted = $product->deleteRow($productId);
     if ($isDeleted) {
       $response = ["deleted" => true];
