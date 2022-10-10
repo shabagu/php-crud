@@ -26,6 +26,10 @@
 .pagination li.disabled a {
     color: #cbced1 !important;
 }
+.pagination .numeric {
+    min-width: 45px;
+    text-align: center;
+}
 
 
 /* file input changing */

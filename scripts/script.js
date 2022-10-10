@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   // calling these function right after the document has loaded
-  getPaginationLimit() // getting pagination limit from cookies
+  getPaginationLimit(7) // getting pagination limit from cookies (or setting default value)
   getProducts() // getting products from database
 
 
@@ -498,15 +498,15 @@ function createProductRow(product) {
 }
 
 // pagination function
-function pagination(totalNumberOfPages, currentPageNumber) {
+function pagination(pagesTotal, currentPage) {
 
   let pageList = ""
 
-  if (totalNumberOfPages > 1) {
-    currentPageNumber = parseInt(currentPageNumber)
+  if (pagesTotal > 1) {
+    currentPage = parseInt(currentPage)
 
-    const previousLiCondition = currentPageNumber == 1 ?  "disabled" : ""
-    const nextLiCondition = currentPageNumber == totalNumberOfPages ? "disabled" : ""
+    const previousLiCondition = currentPage == 1 ?  "disabled" : ""
+    const nextLiCondition = currentPage == pagesTotal ? "disabled" : ""
 
     pageList += `<ul class="pagination justify-content-center">`
     pageList += `
@@ -516,40 +516,41 @@ function pagination(totalNumberOfPages, currentPageNumber) {
     `
     pageList += `
       <li class="page-item ${previousLiCondition}">
-        <a class="page-link" href="#" data-page="${currentPageNumber - 1}">&lt;</a>
+        <a class="page-link" href="#" data-page="${currentPage - 1}">&lt;</a>
       </li>
     `
-    let startPageNumber = 1
-    let endPageNumber = Math.min(totalNumberOfPages, 10)
-    if (currentPageNumber >= 10) {
-      startPageNumber += currentPageNumber - 9
-      endPageNumber += currentPageNumber - 9
+    const maxWidth = 10
+    let startPage = 1
+    let endPage = Math.min(pagesTotal, maxWidth)
+    if (currentPage >= maxWidth) {
+      startPage += currentPage - maxWidth + 1
+      endPage += currentPage - maxWidth + 1
 
-      if (endPageNumber >= totalNumberOfPages) {
-        startPageNumber -= 1
-        endPageNumber = totalNumberOfPages
+      if (endPage >= pagesTotal) {
+        endPage = pagesTotal
+      }
+      if (currentPage == pagesTotal) {
+        startPage -= 1
       }
     }
-    // console.log(totalNumberOfPages)
-    // console.log(startPageNumber)
-    // console.log(endPageNumber)
 
-    for (let pageNumber = startPageNumber; pageNumber <= endPageNumber; pageNumber++) {
-      const activeLiCondition = pageNumber == currentPageNumber ? "active" : ""
+    for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
+      const activeLiCondition = pageNumber == currentPage ? "active" : ""
       pageList += `
-        <li class="page-item ${activeLiCondition}">
+        <li class="page-item numeric ${activeLiCondition}">
           <a class="page-link" href="#" data-page="${pageNumber}">${pageNumber}</a>
         </li>
       `
     }
+
     pageList += `
       <li class="page-item ${nextLiCondition}">
-        <a class="page-link" href="#" data-page="${currentPageNumber + 1}">&gt;</a>
+        <a class="page-link" href="#" data-page="${currentPage + 1}">&gt;</a>
       </li>
     `
     pageList += `
       <li class="page-item ${nextLiCondition}">
-        <a class="page-link" href="#" data-page="${totalNumberOfPages}">&gt;&gt;</a>
+        <a class="page-link" href="#" data-page="${pagesTotal}">&gt;&gt;</a>
       </li>
     `
 
@@ -593,9 +594,9 @@ function imageMissing(element) {
 }
 
 // get pagination limit from cookies
-function getPaginationLimit() {
+function getPaginationLimit(defaultValue) {
   const cookieValue = $.cookie("paginationLimit")
-  let limit = 7
+  let limit = defaultValue
 
   if (Number.isInteger(Number(cookieValue))) {
     limit = cookieValue
@@ -610,7 +611,6 @@ function getPaginationLimit() {
 }
 
 
-// todo: set pagination width limits (?)
 
-// todo: set page limit in cookie (?)
+
 // todo: fix pagination with search (?)
