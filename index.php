@@ -29,7 +29,6 @@
   <title>PHP CRUD</title>
 </head>
 <body>
-  <!-- todo: (05:25:00 - revision) -->
   <h1 class="bg-dark text-light text-center py-2">PHP CRUD</h1>
   <div class="container">
     

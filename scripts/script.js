@@ -27,7 +27,6 @@ $(document).ready(function() {
       },
       success: function(response) {
         // console.log("Data successfully uploaded!")
-        // console.log(response)
         if (response) {
           $("#product-form-modal").modal("hide")
           $("#product-form")[0].reset()
@@ -177,6 +176,7 @@ $(document).ready(function() {
             // console.log("Product successfully deleted!")
             createToast("Product has been deleted successfully", "delete")
             getProducts()
+
             // empty table bug fix
             if ($.trim($("#product-table tbdoy").html()) == "") {
               $("#current-page").val($("#current-page").val() - 1)
@@ -217,6 +217,7 @@ $(document).ready(function() {
             })
             $("#product-table tbody").html(productRows)
             $("#pagination").hide()
+            console.log(response)
           }
         },
         error: function(request, error) {
@@ -399,45 +400,6 @@ $(document).ready(function() {
 
 
 
-// get products function
-function getProducts() {
-  let currentPageNumber = $("#current-page").val()
-  let pageLimit = $("#page-limit").val()
-  $.ajax({
-    url: "/php-crud/ajax.php",
-    type: "get",
-    dataType: "json",
-    data: {
-      page: currentPageNumber,
-      limit: pageLimit,
-      action: "get-multiple-products"
-    },
-    beforeSend: function() {
-      // console.log("Data is loading ...")
-    },
-    success: function(response) {
-      // console.log("Data successfully loaded!")
-      // console.log(response)
-      if (response.products) {
-        let productRows = ""
-        $.each(response.products, function(index, product) {
-          productRows += createProductRow(product)
-        })
-        $("#product-table tbody").html(productRows)
-        let productCount = response.count
-        let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
-        pagination(pageCount, currentPageNumber)
-      }
-    },
-    error: function(request, error) {
-      console.log(arguments)
-      console.log("Error: " + error)
-    }
-  })
-}
-
-
-
 
 /* html-creating functions */
 
@@ -587,6 +549,11 @@ function createToast(message, action) {
   })
 }
 
+
+
+
+/* other functions */
+
 // covering broken images function
 // (images are considered broken if the image file is missing the on server, but database contains image informaition)
 function imageMissing(element) {
@@ -610,7 +577,38 @@ function getPaginationLimit(defaultValue) {
   $("#pagination-dropdown").removeAttr("hidden")
 }
 
-
-
-
-// todo: fix pagination with search (?)
+// get products function
+function getProducts() {
+  let currentPageNumber = $("#current-page").val()
+  let pageLimit = $("#page-limit").val()
+  $.ajax({
+    url: "/php-crud/ajax.php",
+    type: "get",
+    dataType: "json",
+    data: {
+      page: currentPageNumber,
+      limit: pageLimit,
+      action: "get-multiple-products"
+    },
+    beforeSend: function() {
+      // console.log("Data is loading ...")
+    },
+    success: function(response) {
+      // console.log("Data successfully loaded!")
+      if (response.products) {
+        let productRows = ""
+        $.each(response.products, function(index, product) {
+          productRows += createProductRow(product)
+        })
+        $("#product-table tbody").html(productRows)
+        let productCount = response.count
+        let pageCount = Math.ceil(parseInt(productCount) / pageLimit)
+        pagination(pageCount, currentPageNumber)
+      }
+    },
+    error: function(request, error) {
+      console.log(arguments)
+      console.log("Error: " + error)
+    }
+  })
+}

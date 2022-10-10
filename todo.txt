@@ -1,0 +1,5 @@
+
+# divide script.js file by multiple files
+# create search pagination
+
+# do revision (05:25:00)
