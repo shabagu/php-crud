@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
-  // calling get products function right after the document has loaded
-  getProducts()
+  // calling these function right after the document has loaded
+  getPaginationLimit() // getting pagination limit from cookies
+  getProducts() // getting products from database
 
 
 
@@ -252,8 +253,11 @@ $(document).ready(function() {
     $("#current-page").val(1)
     $("#search-input").val("")
     $("#pagination").show()
+    $("#pagination-dropdown").removeAttr("hidden")
 
     getProducts()
+
+    $.cookie("paginationLimit", limit)
   })
 
 
@@ -495,11 +499,15 @@ function createProductRow(product) {
 
 // pagination function
 function pagination(totalNumberOfPages, currentPageNumber) {
+
   let pageList = ""
+
   if (totalNumberOfPages > 1) {
     currentPageNumber = parseInt(currentPageNumber)
+
     const previousLiCondition = currentPageNumber == 1 ?  "disabled" : ""
     const nextLiCondition = currentPageNumber == totalNumberOfPages ? "disabled" : ""
+
     pageList += `<ul class="pagination justify-content-center">`
     pageList += `
       <li class="page-item ${previousLiCondition}">
@@ -511,7 +519,22 @@ function pagination(totalNumberOfPages, currentPageNumber) {
         <a class="page-link" href="#" data-page="${currentPageNumber - 1}">&lt;</a>
       </li>
     `
-    for (let pageNumber = 1; pageNumber <= totalNumberOfPages; pageNumber++) {
+    let startPageNumber = 1
+    let endPageNumber = Math.min(totalNumberOfPages, 10)
+    if (currentPageNumber >= 10) {
+      startPageNumber += currentPageNumber - 9
+      endPageNumber += currentPageNumber - 9
+
+      if (endPageNumber >= totalNumberOfPages) {
+        startPageNumber -= 1
+        endPageNumber = totalNumberOfPages
+      }
+    }
+    // console.log(totalNumberOfPages)
+    // console.log(startPageNumber)
+    // console.log(endPageNumber)
+
+    for (let pageNumber = startPageNumber; pageNumber <= endPageNumber; pageNumber++) {
       const activeLiCondition = pageNumber == currentPageNumber ? "active" : ""
       pageList += `
         <li class="page-item ${activeLiCondition}">
@@ -529,7 +552,7 @@ function pagination(totalNumberOfPages, currentPageNumber) {
         <a class="page-link" href="#" data-page="${totalNumberOfPages}">&gt;&gt;</a>
       </li>
     `
-    // todo: make pagination limit
+
     pageList += `</ul>`
   }
   $("#pagination").html(pageList)
@@ -567,6 +590,23 @@ function createToast(message, action) {
 // (images are considered broken if the image file is missing the on server, but database contains image informaition)
 function imageMissing(element) {
   $(element).attr("src", "media/image-broken.png")
+}
+
+// get pagination limit from cookies
+function getPaginationLimit() {
+  const cookieValue = $.cookie("paginationLimit")
+  let limit = 7
+
+  if (Number.isInteger(Number(cookieValue))) {
+    limit = cookieValue
+  }
+
+  $("#dropdown-menu").html("Page limit: " + limit + " ")
+  $("#page-limit").val(limit)
+  $("#current-page").val(1)
+  $("#search-input").val("")
+  $("#pagination").show()
+  $("#pagination-dropdown").removeAttr("hidden")
 }
 
 
