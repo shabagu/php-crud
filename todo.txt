@@ -1,5 +1,6 @@
+deleting image and then uploading new one and clearing it bug
 
-# divide script.js file by multiple files
-# create search pagination
 
-# do revision (05:25:00)
+create search pagination
+
+do revision (05:25:00)
