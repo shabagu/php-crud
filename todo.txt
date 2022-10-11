@@ -1,6 +1,7 @@
-deleting image and then uploading new one and clearing it bug
+todo list
 
 
-create search pagination
+🛠 deleting image, then uploading new one and clearing it without closing modal bug
+🛠 create pagination for searching
 
-do revision (05:25:00)
+👁 revision (since 05:25:00)

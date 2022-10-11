@@ -1,7 +1,9 @@
 <?php
+
 require_once "Database.php";
-class Product extends Database
-{
+
+class Product extends Database {
+  
   protected $tableName = "product";
 
 

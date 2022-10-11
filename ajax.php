@@ -2,7 +2,7 @@
 $action = $_REQUEST["action"];
 
 if (!empty($action)) {
-  require_once "partials/Product.php";
+  require_once "api/Product.php";
   $product = new Product();
 }
 
