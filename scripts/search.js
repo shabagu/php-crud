@@ -3,6 +3,7 @@ $(document).ready(function() {
   // searching for products
   $(document).on("keyup", "#search-input", function() {
     let searchText = $(this).val()
+    let currentPageNumber = 1
     let pageLimit = $("#page-limit").val()
     if (searchText.length > 0) {
       $.ajax({
@@ -11,6 +12,7 @@ $(document).ready(function() {
         dataType: "json",
         data: {
           searchText: searchText,
+          page: currentPageNumber,
           limit: pageLimit,
           action: "search-products"
         },
@@ -24,7 +26,7 @@ $(document).ready(function() {
               productRows += createProductRow(product)
             })
             $("#product-table tbody").html(productRows)
-            $("#pagination").hide()
+            // $("#pagination").hide()
             console.log(response)
           }
         },
@@ -35,7 +37,7 @@ $(document).ready(function() {
       })
     } else {
       getProducts();
-      $("#pagination").show()
+      // $("#pagination").show()
     }
   })
 
@@ -44,7 +46,7 @@ $(document).ready(function() {
     event.preventDefault()
     $("#current-page").val(1)
     $("#search-input").val("")
-    $("#pagination").show()
+    // $("#pagination").show()
     setTimeout(() => {
       this.blur()
     }, 100)

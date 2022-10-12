@@ -184,8 +184,8 @@ $(document).ready(function() {
             // empty table bug fix
             if ($.trim($("#product-table tbdoy").html()) == "") {
               $("#current-page").val($("#current-page").val() - 1)
-              if ($("current-page").val() <= 0) {
-                $("current-page").val(1)
+              if ($("#current-page").val() <= 0) {
+                $("#current-page").val(1)
               }
             }
 

@@ -58,6 +58,7 @@ if ($action == "get-multiple-products") {
   $page = (!empty($_GET["page"])) ? $_GET["page"] : 1;
   $limit = (!empty($_GET["limit"])) ? $_GET["limit"]: 7;
   $start = ($page - 1) * $limit;
+  
   $products = $product->getMultipleRows($start, $limit);
 
   if (!empty($products)) {
@@ -106,8 +107,9 @@ if ($action == "delete-product") {
 //search products action
 if ($action == "search-products") {
   $searchText = (!empty($_GET["searchText"])) ? trim($_GET["searchText"]) : "";
-  $start = 0;
+  $page = (!empty($_GET["page"])) ? $_GET["page"]: 1;
   $limit = (!empty($_GET["limit"])) ? $_GET["limit"]: 7;
+  $start = ($page - 1) * $limit;
 
   $response = $product->searchRows($searchText, $start, $limit);
 

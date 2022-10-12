@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("#page-limit").val(limit)
     $("#current-page").val(1)
     $("#search-input").val("")
-    $("#pagination").show()
+    // $("#pagination").show()
     $("#pagination-dropdown").removeAttr("hidden")
 
     getProducts()
@@ -46,7 +46,7 @@ function getPaginationLimitCookie(defaultValue) {
   $("#page-limit").val(limit)
   $("#current-page").val(1)
   $("#search-input").val("")
-  $("#pagination").show()
+  // $("#pagination").show()
   $("#pagination-dropdown").removeAttr("hidden")
 }
 
